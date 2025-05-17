@@ -1816,7 +1816,7 @@ form.search-form {
 }
 @media (max-width: 767px) {
   .header-left-wrap {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
   }
 }
 
@@ -2656,6 +2656,9 @@ li.nav-item a.nav-link i {
   gap: 80px;
 }
 @media (max-width: 767px) {
+  .service_slider_wrap{
+    display: none;
+  }
   .slider_item {
     height: 100px;
   }
