@@ -16,6 +16,9 @@
     <!-- Theme Config Js -->
     <script src="js/config.js"></script>
 
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="vendor/gridjs/theme/mermaid.min.css" />
+
     <!-- Vendor css -->
     <link href="css/vendor.min.css" rel="stylesheet" type="text/css" />
 
@@ -24,6 +27,13 @@
 
     <!-- Icons css -->
     <link href="css/icons.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Sweet Alert css-->
+    <link
+      href="vendor/sweetalert2/sweetalert2.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
   </head>
 
   <body>
@@ -102,7 +112,7 @@
         <div class="page-container topbar-menu">
           <div class="d-flex align-items-center gap-2">
             <!-- Sidebar Menu Toggle Button -->
-            <button class="sidenav-toggle-button btn btn-secondary btn-icon">
+            <button class="sidenav-toggle-button btn btn-primary btn-icon">
               <i class="ti ti-menu-deep fs-24"></i>
             </button>
           </div>
@@ -218,7 +228,289 @@
               </ol>
             </div>
           </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div
+                  class="card-header border-bottom border-dashed d-flex flex-wrap justify-content-between gap-2"
+                >
+                  <!-- <h4 class="header-title">Base Example</h4> -->
+                  <div class="">
+                    <a
+                      href="apps-ecommerce-products-add.html"
+                      class="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
+                      ><i class="ti ti-plus me-1"></i>Add Precious</a
+                    >
+                  </div>
 
+                  <!-- Modal -->
+                  <div
+                    class="modal fade"
+                    id="staticBackdrop"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="false"
+                    tabindex="-1"
+                    aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true"
+                  >
+                    <div
+                      class="modal-dialog modal-lg modal-dialog-scrollable"
+                      role="document"
+                    >
+                      <div class="modal-content">
+                        <div class="modal-header text-bg-primary border-0">
+                          <h5 class="modal-title" id="staticBackdropLabel">
+                            Add New Precious
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <!-- end modal header -->
+
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <div class="card">
+                                <div
+                                  class="card-header border-bottom border-dashed"
+                                >
+                                  <h4 class="card-title">
+                                    Precious Information
+                                  </h4>
+                                  <p class="text-muted mb-0">
+                                    Precious on the list are just for the "New
+                                    Arrival" section.
+                                  </p>
+                                </div>
+
+                                <div class="card-body">
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="mb-3">
+                                        <label
+                                          for="SoldOrNot"
+                                          class="form-label"
+                                          >Status</label
+                                        >
+                                        <div>
+                                          <input
+                                            type="checkbox"
+                                            id="SoldOrNot"
+                                            checked
+                                            data-switch="bool"
+                                            data-bs-toggle="collapse"
+                                            href="#collapsePreciousInformation"
+                                            aria-expanded="false"
+                                          />
+                                          <label
+                                            for="SoldOrNot"
+                                            data-on-label="Alive"
+                                            data-off-label="Sold"
+                                          ></label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row collapse show"
+                                    id="collapsePreciousInformation"
+                                  >
+                                    <div class="col-lg-12">
+                                      <div class="mb-3">
+                                        <label
+                                          for="preciousId"
+                                          class="form-label"
+                                          >Precious Id</label
+                                        >
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          data-toggle="input-mask"
+                                          data-mask-format="INF-00-00000000"
+                                        />
+                                        <span class="fs-13 text-muted"
+                                          >e.g "INF-01-25051701"</span
+                                        >
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                      <div class="mb-3">
+                                        <label
+                                          for="preciousTitle"
+                                          class="form-label"
+                                          >Precious Title</label
+                                        >
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          id="preciousTitle"
+                                          placeholder="Enter Precious Title"
+                                          required=""
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                      <div class="mb-3">
+                                        <label for="Price" class="form-label"
+                                          >Price</label
+                                        >
+                                        <div class="input-group flex-nowrap">
+                                          <span
+                                            class="input-group-text"
+                                            id="preciousPrice"
+                                            >$</span
+                                          >
+                                          <input
+                                            type="number"
+                                            class="form-control"
+                                            placeholder="Price"
+                                            aria-label="Price"
+                                            aria-describedby="preciousPrice"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                      <div class="mb-3">
+                                        <label for="onSale" class="form-label"
+                                          >On Sale</label
+                                        >
+                                        <div>
+                                          <!-- Warning Switch-->
+                                          <input
+                                            type="checkbox"
+                                            id="onSale"
+                                            data-switch="warning"
+                                          />
+                                          <label
+                                            for="onSale"
+                                            data-on-label="Yes"
+                                            data-off-label="No"
+                                          ></label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-10">
+                                      <div class="mb-3">
+                                        <label
+                                          for="preciousDiscounts"
+                                          class="form-label"
+                                          >Discounts</label
+                                        >
+                                        <div class="input-group flex-nowrap">
+                                          <span class="input-group-text"
+                                            >$</span
+                                          >
+                                          <input
+                                            type="number"
+                                            class="form-control"
+                                            placeholder="Discounts"
+                                            aria-label="Discounts"
+                                            aria-describedby="preciousDiscounts"
+                                            id="preciousDiscounts"
+                                            disabled
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                      <div class="mb-3">
+                                        <label
+                                          for="preciousTag"
+                                          class="form-label"
+                                          >Precious Tag</label
+                                        >
+                                        <select
+                                          class="form-select my-1 my-md-0 me-sm-3"
+                                          data-toggle="select2"
+                                          id="preciousTag"
+                                        >
+                                          <option>Select Tag</option>
+                                          <option>Stelluna</option>
+                                          <option>Adornment</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                      <div class="mb-3">
+                                        <label
+                                          for="ratingSelect"
+                                          class="form-label"
+                                          >Ratings</label
+                                        >
+                                        <select
+                                          class="form-select"
+                                          id="ratingSelect"
+                                        >
+                                          <option>1</option>
+                                          <option>2</option>
+                                          <option>3</option>
+                                          <option>4</option>
+                                          <option>5</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                      <div class="mb-3">
+                                        <label
+                                          for="preciousPicture"
+                                          class="form-label"
+                                          >Precious Picture URL</label
+                                        >
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          id="preciousPicture"
+                                          placeholder="Enter Precious Picture URL"
+                                          required=""
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button type="button" class="btn btn-primary">
+                            Understood
+                          </button>
+                        </div>
+                        <!-- end modal footer -->
+                      </div>
+                      <!-- end modal content-->
+                    </div>
+                    <!-- end modal dialog-->
+                  </div>
+                  <!-- end modal-->
+                </div>
+                <!-- end card header -->
+
+                <div class="card-body">
+                  <div id="table-gridjs"></div>
+                </div>
+                <!-- end card-body -->
+              </div>
+              <!-- end card -->
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
           <div class="row">
             <div class="col-12">
               <div class="card">
@@ -237,8 +529,9 @@
 
                     <div>
                       <a
-                        href="apps-ecommerce-products-add.html"
+                        href="#"
                         class="btn btn-primary"
+                        id="sweetalert-delete-button"
                         ><i class="ti ti-plus me-1"></i>Add Precious</a
                       >
                     </div>
@@ -783,5 +1076,18 @@
 
     <!-- App js -->
     <script src="js/app.js"></script>
+
+    <!-- Sweet Alerts js -->
+    <script src="vendor/sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- gridjs js -->
+    <script src="vendor/gridjs/gridjs.umd.js"></script>
+
+    <script src="js/pages/table-gridjs.js"></script>
+
+    <!-- Sweet alert demo js-->
+    <script src="js/pages/extended-sweetalerts.js"></script>
+
+    <script src="js/pages/form-inputmask.js"></script>
   </body>
 </html>

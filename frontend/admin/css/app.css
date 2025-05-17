@@ -108,7 +108,7 @@ File: App Css File
   --bs-gray-800: #343a40;
   --bs-gray-900: #313a46;
   --bs-primary: #313a46;
-  --bs-secondary: #669776;
+  --bs-secondary: #ec6600;
   --bs-success: #70bb63;
   --bs-info: #60addf;
   --bs-warning: #ebb751;
@@ -3497,6 +3497,23 @@ textarea.form-control-lg {
   --bs-btn-disabled-border-color: #313a46;
 }
 
+.btn-infjew {
+  --bs-btn-color: rgb(255, 249, 237);
+  --bs-btn-bg: #313a46;
+  --bs-btn-border-color: #313a46;
+  --bs-btn-hover-color: rgb(255, 249, 237);
+  --bs-btn-hover-bg: rgb(236, 102, 0);
+  --bs-btn-hover-border-color: rgb(236, 102, 0);
+  --bs-btn-focus-shadow-rgb: 80, 88, 98;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #333333;
+  --bs-btn-active-border-color: #333333;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #313a46;
+  --bs-btn-disabled-border-color: #313a46;
+}
+
 .btn-secondary {
   --bs-btn-color: #fff;
   --bs-btn-bg: #669776;
@@ -3621,6 +3638,23 @@ textarea.form-control-lg {
   --bs-btn-border-color: #313a46;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #313a46;
+  --bs-btn-hover-border-color: #313a46;
+  --bs-btn-focus-shadow-rgb: 49, 58, 70;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #313a46;
+  --bs-btn-active-border-color: #313a46;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #313a46;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #313a46;
+  --bs-gradient: none;
+}
+
+.btn-outline-infjew {
+  --bs-btn-color: #313a46;
+  --bs-btn-border-color: #313a46;
+  --bs-btn-hover-color: rgb(255, 249, 237);
+  --bs-btn-hover-bg: rgb(236, 102, 0);
   --bs-btn-hover-border-color: #313a46;
   --bs-btn-focus-shadow-rgb: 49, 58, 70;
   --bs-btn-active-color: #fff;
@@ -17174,13 +17208,13 @@ body {
 }
 
 ::-moz-selection {
-  color: #669776;
-  background: rgba(102, 151, 118, 0.15);
+  color: #fff;
+  background: #ec6600;
 }
 
 ::selection {
-  color: #669776;
-  background: rgba(102, 151, 118, 0.15);
+  color: #fff;
+  background: #ec6600;
 }
 
 button,
@@ -17466,7 +17500,7 @@ input[data-switch] + label:before {
   display: block;
   font-family: inherit;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   line-height: 24px;
   position: absolute;
   right: 3px;
@@ -17507,7 +17541,7 @@ input[data-switch]:checked + label:after {
 }
 
 input[data-switch=bool] + label {
-  background-color: #ed6060;
+  background-color: #ec6600;
 }
 
 input:disabled + label {
