@@ -1,28 +1,135 @@
+window.preciousList = [
+  [
+    "INF0125051701",
+    "Premium | Round Cuts – Starless Stelluna Bracelet",
+    "Stelluna",
+    "300",
+    "-",
+    "5",
+    "Sold",
+    "INF0125051701",
+  ],
+  [
+    "INF0125051702",
+    "Intestine Cuts - Sparse Star Stelluna Bracelet",
+    "Stelluna",
+    "300",
+    "-",
+    "5",
+    "Active",
+    "INF0125051702",
+  ],
+  [
+    "INF0125051703",
+    "Classic Cuts - Jade Frost Clarity Deep Green Stelluna Bracelet",
+    "Stelluna",
+    "299",
+    "199",
+    "5",
+    "Sale",
+    "INF0125051703",
+  ],
+  [
+    "INF0125051704",
+    "Bob",
+    "Stelluna",
+    "300",
+    "-",
+    "5",
+    "Unavailable",
+    "INF0125051704",
+  ],
+  [
+    "INF0125051705",
+    "Eve",
+    "Stelluna",
+    "300",
+    "-",
+    "5",
+    "Unavailable",
+    "INF0125051705",
+  ],
+  [
+    "INF0125051706",
+    "Charlie",
+    "Stelluna",
+    "300",
+    "-",
+    "5",
+    "Active",
+    "INF0125051706",
+  ],
+  [
+    "INF0125051707",
+    "David",
+    "Stelluna",
+    "300",
+    "-",
+    "5",
+    "Active",
+    "INF0125051707",
+  ],
+  [
+    "INF0125051708",
+    "Grace",
+    "Stelluna",
+    "300",
+    "-",
+    "5",
+    "Sold",
+    "INF0125051708",
+  ],
+  [
+    "INF0125051709",
+    "Heather",
+    "Stelluna",
+    "300",
+    "-",
+    "5",
+    "Sold",
+    "INF0125051709",
+  ],
+  [
+    "INF0125051710",
+    "Isaac",
+    "Adornment",
+    "300",
+    "-",
+    "5",
+    "Sold",
+    "INF0125051710",
+  ],
+];
+
 new gridjs.Grid({
   columns: [
     {
-      name: "Code",
+      name: "ID",
       width: "200px",
       formatter: function (e) {
         return gridjs.html('<span class="fw-semibold">' + e + "</span>");
       },
     },
     { name: "Title", width: "250px" },
+    { name: "Tag", width: "100px" },
     { name: "Price", width: "50px" },
-    { name: "Discount", width: "50px" },
+    {
+      name: "Discount",
+      width: "50px",
+    },
     { name: "Rating", width: "50px" },
     {
       name: "Status",
       width: "100px",
       formatter: function (e) {
         return gridjs.html(
-          e === "1"
+          e === "Active"
             ? '<span class="badge bg-success fs-12 p-1">Active</span>'
-            : e === "0"
+            : e === "Sold"
             ? '<span class="badge bg-primary fs-12 p-1">Sold</span>'
-            : e === "2"
-            ? '<span class="badge bg-warning fs-12 p-1">On Sale</span>'
-            : e === "3"
+            : e === "Sale"
+            ? '<span class="badge bg-warning fs-12 p-1">Sale</span>'
+            : e === "Unavailable"
             ? '<span class="badge bg-danger fs-12 p-1">Unavailable</span>'
             : '<span class="badge bg-secondary-subtle text-secondary fs-12 p-1">Unknown</span>'
         );
@@ -33,10 +140,10 @@ new gridjs.Grid({
       width: "100px",
       formatter: function (e) {
         return gridjs.html(
-          '<div class="hstack gap-2"><a href="' +
-            e[0] +
-            '" target="_blank" class="btn btn-soft-success btn-icon btn-sm rounded-circle"><i class="ti ti-edit fs-16"></i></a><a href="javascript:void(0);" class="btn btn-soft-danger btn-icon btn-sm rounded-circle sweet-delete-btn" data-id="' +
-            e[1] +
+          '<div class="hstack gap-2"><a data-bs-toggle="modal" data-bs-target="#EditPreciousModal" data-id="' +
+            e +
+            '" target="_blank" class="btn btn-soft-success btn-icon btn-sm rounded-circle table-edit-precious-btn"><i class="ti ti-edit fs-16"></i></a><a href="javascript:void(0);" class="btn btn-soft-danger btn-icon btn-sm rounded-circle sweet-delete-btn" data-id="' +
+            e +
             '"><i class="ti ti-trash"></i></a></div>'
         );
       },
@@ -45,96 +152,5 @@ new gridjs.Grid({
   pagination: { limit: 10 },
   sort: !0,
   search: !0,
-  data: [
-    [
-      "INF0125051701",
-      "Premium | Round Cuts – Starless Stelluna Bracelet",
-      "300",
-      "-",
-      "5",
-      "0",
-      ["https://www.baidu.com", "INF0125051701"],
-    ],
-    [
-      "INF0125051702",
-      "Intestine Cuts - Sparse Star Stelluna Bracelet",
-      "300",
-      "-",
-      "5",
-      "1",
-      ["https://www.baidu.com", "INF0125051702"],
-    ],
-    [
-      "INF0125051703",
-      "Classic Cuts - Jade Frost Clarity Deep Green Stelluna Bracelet",
-      "299",
-      "199",
-      "5",
-      "2",
-      ["https://www.baidu.com", "INF0125051703"],
-    ],
-    [
-      "INF0125051704",
-      "Bob",
-      "300",
-      "-",
-      "5",
-      "3",
-      ["https://www.baidu.com", "INF0125051701"],
-    ],
-    [
-      "INF0125051705",
-      "Eve",
-      "300",
-      "-",
-      "5",
-      "3",
-      ["https://www.baidu.com", "INF0125051701"],
-    ],
-    [
-      "INF0125051706",
-      "Charlie",
-      "300",
-      "-",
-      "5",
-      "1",
-      ["https://www.baidu.com", "INF0125051701"],
-    ],
-    [
-      "INF0125051707",
-      "David",
-      "300",
-      "-",
-      "5",
-      "1",
-      ["https://www.baidu.com", "INF0125051701"],
-    ],
-    [
-      "INF0125051708",
-      "Grace",
-      "300",
-      "-",
-      "5",
-      "0",
-      ["https://www.baidu.com", "INF0125051701"],
-    ],
-    [
-      "INF0125051709",
-      "Heather",
-      "300",
-      "-",
-      "5",
-      "0",
-      ["https://www.baidu.com", "INF0125051701"],
-    ],
-    [
-      "INF0125051710",
-      "Isaac",
-      "300",
-      "-",
-      "5",
-      "0",
-      ["https://www.baidu.com", "INF0125051701"],
-    ],
-  ],
+  data: preciousList,
 }).render(document.getElementById("table-gridjs"));

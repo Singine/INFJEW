@@ -112,6 +112,7 @@ File: App Css File
   --bs-success: #70bb63;
   --bs-info: #60addf;
   --bs-warning: #ebb751;
+  --bs-infjew: #ec6600;
   --bs-danger: #ed6060;
   --bs-light: #eef2f7;
   --bs-dark: #313a46;
@@ -8461,6 +8462,11 @@ textarea.form-control-lg {
   border-color: rgba(var(--bs-secondary-rgb), var(--bs-border-opacity)) !important;
 }
 
+.border-infjew {
+  --bs-border-opacity: 1;
+  border-color: #ec6600 !important;
+}
+
 .border-success {
   --bs-border-opacity: 1;
   border-color: rgba(var(--bs-success-rgb), var(--bs-border-opacity)) !important;
@@ -9639,6 +9645,11 @@ textarea.form-control-lg {
 .text-primary {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
+}
+
+.text-infjew {
+  --bs-text-opacity: 1;
+  color: #ec6600 !important;
 }
 
 .text-secondary {
@@ -16638,6 +16649,12 @@ select.form-control-sm:not([size]):not([multiple]) {
 .form-radio-warning .form-check-input:checked {
   background-color: var(--bs-warning);
   border-color: var(--bs-warning);
+}
+
+.form-checkbox-infjew .form-check-input:checked,
+.form-radio-infjew .form-check-input:checked {
+  background-color: var(--bs-infjew);
+  border-color: var(--bs-infjew);
 }
 
 .form-checkbox-danger .form-check-input:checked,
