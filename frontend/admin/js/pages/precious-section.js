@@ -66,7 +66,7 @@ document
   .getElementById("confirm-delete-banner-btn")
   .addEventListener("click", function () {
     // 目标 URL，根据你的后端接口改成真实地址
-    const url = "http://infjew.com/api/hello";
+    const url = "http://www.infjew.com/api/hello";
 
     GetHttpRequest(url);
   });
