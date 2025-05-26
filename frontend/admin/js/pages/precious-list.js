@@ -44,6 +44,7 @@ document
         parseFloat(document.getElementById("add-precious-discount").value) || 0,
       tag: document.getElementById("add-precious-tag").value,
       rating: parseInt(document.getElementById("add-rating-select").value),
+      Url: document.getElementById("add-precious-url").value.trim(),
       pictureUrl: document
         .getElementById("add-precious-picture-url")
         .value.trim(),
@@ -138,7 +139,6 @@ function fillEditForm(result) {
 
   // 设置 Tag（如果有对应项）
   const tagSelect = document.getElementById("edit-precious-tag");
-  console.log("tagSelect", tagSelect);
   tagSelect.value = result[2]; // 假设 result[2] 是 "Stelluna" 或 "Adornment"
 
   // 设置 Ratings（默认为 5）
@@ -149,6 +149,8 @@ function fillEditForm(result) {
       break;
     }
   }
+
+  document.getElementById("edit-precious-url").value = result[7];
 
   // 模拟图片地址为 PreciousId（你可以换成实际字段）
   document.getElementById(
@@ -162,6 +164,7 @@ function clearPreciousForm() {
   document.getElementById("edit-precious-title").value = "";
   document.getElementById("edit-precious-price").value = "";
   document.getElementById("edit-precious-discount").value = "";
+  document.getElementById("edit-precious-url").value = "";
   document.getElementById("edit-precious-picture-url").value = "";
 
   // 折扣栏 disabled 状态恢复（可选）
@@ -191,6 +194,7 @@ function getEditPreciousForm() {
       parseFloat(document.getElementById("edit-precious-discount").value) || 0,
     tag: document.getElementById("edit-precious-tag").value,
     rating: parseInt(document.getElementById("edit-rating-select").value),
+    Url: document.getElementById("edit-precious-url").value.trim(),
     pictureUrl: document
       .getElementById("edit-precious-picture-url")
       .value.trim(),

@@ -7,6 +7,7 @@ window.preciousList = [
     "-",
     "5",
     "Sold",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051701",
   ],
   [
@@ -17,6 +18,7 @@ window.preciousList = [
     "-",
     "5",
     "Active",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051702",
   ],
   [
@@ -27,6 +29,7 @@ window.preciousList = [
     "199",
     "5",
     "Sale",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051703",
   ],
   [
@@ -37,6 +40,7 @@ window.preciousList = [
     "-",
     "5",
     "Unavailable",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051704",
   ],
   [
@@ -47,6 +51,7 @@ window.preciousList = [
     "-",
     "5",
     "Unavailable",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051705",
   ],
   [
@@ -57,6 +62,7 @@ window.preciousList = [
     "-",
     "5",
     "Active",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051706",
   ],
   [
@@ -67,6 +73,7 @@ window.preciousList = [
     "-",
     "5",
     "Active",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051707",
   ],
   [
@@ -77,6 +84,7 @@ window.preciousList = [
     "-",
     "5",
     "Sold",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051708",
   ],
   [
@@ -87,6 +95,7 @@ window.preciousList = [
     "-",
     "5",
     "Sold",
+    "https://store.infjew.com/INF-00-00000000",
     "INF0125051709",
   ],
   [
@@ -97,6 +106,7 @@ window.preciousList = [
     "-",
     "5",
     "Sold",
+    "",
     "INF0125051710",
   ],
 ];
@@ -111,7 +121,7 @@ new gridjs.Grid({
       },
     },
     { name: "Title", width: "250px" },
-    { name: "Tag", width: "100px" },
+    { name: "Tag", width: "120px" },
     { name: "Price", width: "50px" },
     {
       name: "Discount",
@@ -132,6 +142,17 @@ new gridjs.Grid({
             : e === "Unavailable"
             ? '<span class="badge bg-danger fs-12 p-1">Unavailable</span>'
             : '<span class="badge bg-secondary-subtle text-secondary fs-12 p-1">Unknown</span>'
+        );
+      },
+    },
+    {
+      name: "Url",
+      width: "50px",
+      formatter: function (e) {
+        return gridjs.html(
+          e != ""
+            ? '<a href="javascript: void(0);" class="link-reset fs-20 p-1 text-infjew"><i class="ti ti-link"></i></a>'
+            : '<a href="javascript: void(0);" class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
         );
       },
     },

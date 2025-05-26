@@ -232,7 +232,12 @@
                   class="d-flex card-header justify-content-between align-items-center border-bottom border-dashed"
                 >
                   <h4 class="header-title">Index Banner</h4>
-                  <a href="javascript:void(0);" class="btn btn-sm btn-primary"
+                  <a
+                    href="javascript:void(0);"
+                    class="btn btn-sm btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#AddBannerModal"
+                    id="add-banner-modal-btn"
                     >Add Banner <i class="ti ti-plus ms-1"></i
                   ></a>
                 </div>
@@ -249,7 +254,7 @@
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="index-banner-list-tbody">
                         <tr>
                           <td>
                             <img
@@ -258,34 +263,31 @@
                               class="me-2 avatar-xl"
                             />
                           </td>
-                          <td>New Collections</td>
-                          <td>Coming up</td>
-                          <td>Trending products of Summer 2025</td>
-
-                          <td class="text-muted">
-                            <a
-                              href="javascript: void(0);"
-                              class="link-reset fs-20 p-1 text-infjew"
-                              data-bs-toggle="tooltip"
-                              data-bs-trigger="hover"
-                              data-bs-title="https://store.infjew.com/INF-00-00000000"
-                            >
-                              <i class="ti ti-link"></i
-                            ></a>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
                           </td>
-                          <td class="text-muted">
-                            <a
-                              href="javascript: void(0);"
-                              class="link-reset fs-20 p-1"
-                            >
-                              <i class="ti ti-pencil"></i
-                            ></a>
-                            <a
-                              href="javascript: void(0);"
-                              class="link-reset fs-20 p-1"
-                            >
-                              <i class="ti ti-trash"></i
-                            ></a>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
+                          </td>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
+                          </td>
+
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
+                          </td>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
                           </td>
                         </tr>
                       </tbody>
@@ -324,48 +326,62 @@
                           <th>Title</th>
                           <th>Price</th>
                           <th>Discount</th>
+                          <th>Percentage</th>
                           <th>Rating</th>
                           <th>DDL</th>
                           <th>Link</th>
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="index-counting-down-tbody">
                         <tr>
                           <td>
                             <img
+                              id="inner-countingdown-precious-image"
                               src="images/users/avatar-1.png"
                               alt="table-user"
                               class="me-2 avatar-xl"
                             />
                           </td>
-                          <td>Collection of Formless Stelluna</td>
-                          <td>700</td>
-                          <td>
-                            <span class="badge bg-infjew fs-12 p-1"
-                              ><a>30</a>%</span
-                            >
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
                           </td>
-                          <td>5</td>
-                          <td>2025/10/30</td>
-                          <td class="text-muted">
-                            <a
-                              href="javascript: void(0);"
-                              class="link-reset fs-20 p-1 text-infjew"
-                              data-bs-toggle="tooltip"
-                              data-bs-trigger="hover"
-                              data-bs-title="https://store.infjew.com/INF-00-00000000"
-                            >
-                              <i class="ti ti-link"></i
-                            ></a>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
                           </td>
-                          <td class="text-muted">
-                            <a
-                              href="javascript: void(0);"
-                              class="link-reset fs-20 p-1 text-infjew"
-                            >
-                              <i class="ti ti-pencil"></i
-                            ></a>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
+                          </td>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
+                          </td>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
+                          </td>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
+                          </td>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
+                          </td>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
                           </td>
                         </tr>
                       </tbody>
@@ -381,6 +397,349 @@
           </div>
         </div>
         <!-- container -->
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="AddBannerModal"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="AddBannerModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-lg modal-dialog-scrollable"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-header text-bg-primary border-0">
+                <h5 class="modal-title" id="AddBannerModalLabel">Add Banner</h5>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <!-- end modal header -->
+
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header border-bottom border-dashed">
+                        <h4 class="card-title">Banner Information</h4>
+                        <p class="text-muted mb-0">
+                          Items on the list are just for the "Banner" section.
+                          Only can be added and deleted.
+                        </p>
+                      </div>
+
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label for="add-banner-title-1" class="form-label"
+                                >Title - Line 1</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="add-banner-title-1"
+                                placeholder="Enter Banner Title - Line 1"
+                                required=""
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label for="add-banner-title-2" class="form-label"
+                                >Title - Line 2</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="add-banner-title-2"
+                                placeholder="Enter Banner Title - Line 2"
+                                required=""
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label
+                                for="add-banner-subtitle"
+                                class="form-label"
+                                >Subtitle</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="add-banner-subtitle"
+                                placeholder="Enter Banner Subtitle"
+                                required=""
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label for="add-banner-url" class="form-label"
+                                >Banner URL</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="add-banner-url"
+                                placeholder="Enter Banner URL"
+                                required=""
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label
+                                for="add-banner-picture-url"
+                                class="form-label"
+                                >Banner Picture URL</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="add-banner-picture-url"
+                                placeholder="Enter Banner Picture URL"
+                                required=""
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-light"
+                  data-bs-dismiss="modal"
+                  id="close-save-precious-btn"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="save-countingdown-precious-btn"
+                >
+                  Save
+                </button>
+              </div>
+              <!-- end modal footer -->
+            </div>
+            <!-- end modal content-->
+          </div>
+          <!-- end modal dialog-->
+        </div>
+        <div
+          class="modal fade"
+          id="EditCountingDownModal"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="EditCountingDownModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-lg modal-dialog-scrollable"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-header text-bg-primary border-0">
+                <h5 class="modal-title" id="EditCountingDownModalLabel">
+                  Edit Counting Down
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <!-- end modal header -->
+
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header border-bottom border-dashed">
+                        <h4 class="card-title">Counting Down Information</h4>
+                        <p class="text-muted mb-0">
+                          Precious on the list are just for the "Counting Down"
+                          section. Only can be edited, not added.
+                        </p>
+                      </div>
+
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label
+                                for="edit-countingdown-title"
+                                class="form-label"
+                                >Title</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="edit-countingdown-title"
+                                placeholder="Enter Counting Down Title"
+                                required=""
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label
+                                for="edit-countingdown-price"
+                                class="form-label"
+                                >Price</label
+                              >
+                              <div class="input-group flex-nowrap">
+                                <span class="input-group-text">$</span>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  placeholder="Price"
+                                  aria-label="Price"
+                                  aria-describedby="edit-countingdown-price"
+                                  id="edit-countingdown-price"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <div class="mb-3">
+                              <label
+                                for="edit-countingdown-discount"
+                                class="form-label"
+                                >Discount</label
+                              >
+                              <div class="input-group flex-nowrap">
+                                <span class="input-group-text">$</span>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  placeholder="Discount"
+                                  aria-label="Discount"
+                                  aria-describedby="edit-countingdown-discount"
+                                  id="edit-countingdown-discount"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="mb-3">
+                              <label
+                                for="edit-countingdown-rating-select"
+                                class="form-label"
+                                >Ratings</label
+                              >
+                              <select
+                                class="form-select"
+                                id="edit-countingdown-rating-select"
+                              >
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label class="form-label mb-0"
+                                >Counting Down DDL</label
+                              >
+
+                              <input
+                                type="text"
+                                class="form-control"
+                                data-provider="flatpickr"
+                                data-date-format="Y/m/d"
+                                id="edit-countingdown-ddl"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label
+                                for="edit-countingdown-precious-url"
+                                class="form-label"
+                                >Precious URL</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="edit-countingdown-precious-url"
+                                placeholder="Enter Precious URL"
+                                required=""
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label
+                                for="edit-countingdown-precious-picture-url"
+                                class="form-label"
+                                >Precious Picture URL</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="edit-countingdown-precious-picture-url"
+                                placeholder="Enter Counting Down Precious Picture URL"
+                                required=""
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-light"
+                  data-bs-dismiss="modal"
+                  id="close-save-precious-btn"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="save-countingdown-precious-btn"
+                >
+                  Save
+                </button>
+              </div>
+              <!-- end modal footer -->
+            </div>
+            <!-- end modal content-->
+          </div>
+          <!-- end modal dialog-->
+        </div>
+        <!-- end modal-->
 
         <!-- Footer Start -->
         <footer class="footer">
