@@ -39,10 +39,13 @@ func main() {
 	countingDownWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.GetCountingDownHandler))
 	mux.Handle("/api/countingdown", countingDownWithCORS)
 
-	countingDownUpdateWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.UpdateCountingDownHandler))
-	mux.Handle("/api/countingdown/update", countingDownUpdateWithCORS)
-
-
+	mux.Handle("/api/countingdown/update", middleware.WithCORS(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+	handlers.UpdateCountingDownHandler(w, r)
+})))
 
     fmt.Println("服务器启动中，监听端口 8080...")
 	if err := http.ListenAndServe(":8080", mux); err != nil {
