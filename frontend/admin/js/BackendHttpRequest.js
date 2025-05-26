@@ -29,7 +29,7 @@ document
         window.location.href = "http://dashboard.infjew.com";
       })
       .catch((error) => {
-        alert("登录失败：" + error.message);
+        console.log("登录失败：" + error.message);
       });
   });
 
