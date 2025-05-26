@@ -6,7 +6,7 @@ import (
 
 	"backend/handlers"
 	"backend/middleware"
-
+	"backend/db"
 	
 )
 
@@ -14,7 +14,7 @@ import (
 
 func main() {
 
-	
+	db.InitDB()
 	
 	mux := http.NewServeMux()
 
