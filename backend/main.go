@@ -14,6 +14,8 @@ func main() {
 	})
 
 	http.HandleFunc("/check-id", handlers.CheckIDHandler)
+	http.HandleFunc("/hello", handlers.HelloHandler) 
+
 
 	port := ":8080"
 	fmt.Printf("服务器正在运行在 %s\n", port)
