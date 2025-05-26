@@ -247,6 +247,7 @@
                       <thead>
                         <tr>
                           <th>Image</th>
+                          <th>ID</th>
                           <th>Title - Line 1</th>
                           <th>Title - Line 2</th>
                           <th>Subtitle</th>
@@ -262,6 +263,11 @@
                               alt="table-user"
                               class="me-2 avatar-xl"
                             />
+                          </td>
+                          <td class="placeholder-glow">
+                            <span
+                              class="placeholder col-12 placeholder-lg"
+                            ></span>
                           </td>
                           <td class="placeholder-glow">
                             <span
@@ -740,6 +746,43 @@
           <!-- end modal dialog-->
         </div>
         <!-- end modal-->
+
+        <!-- Warning Alert Modal -->
+        <div
+          id="banner-delete-warning-modal"
+          class="modal fade"
+          tabindex="-1"
+          role="dialog"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-body p-4">
+                <div class="text-center">
+                  <i class="ti ti-alert-circle h1 text-warning"></i>
+                  <h4 class="mt-2">Please confirm!</h4>
+                  <p class="mt-3">
+                    Make sure that you are trying to delete a banner.
+                  </p>
+
+                  <p class="my-3 placeholder-glow" id="delete-banner-id">
+                    <span class="placeholder col-6 placeholder-lg"></span>
+                  </p>
+                  <button
+                    type="button"
+                    class="btn btn-primary my-2"
+                    data-bs-dismiss="modal"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
 
         <!-- Footer Start -->
         <footer class="footer">

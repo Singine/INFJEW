@@ -47,6 +47,21 @@ document
     getCountingDownPreciousForm();
   });
 
+// 使用事件委托监听 .banner-delete-trash 的点击事件
+document.addEventListener("click", function (e) {
+  // 判断是否点击的是 .banner-delete-trash 元素
+  if (e.target.closest(".banner-delete-trash")) {
+    const target = e.target.closest(".banner-delete-trash");
+    const bannerId = target.getAttribute("data-banner-id"); // 获取 data-banner-id 的值
+
+    // 设置 #delete-banner-id 元素的内容为 bannerId
+    const idContainer = document.getElementById("delete-banner-id");
+    if (idContainer) {
+      idContainer.innerHTML = bannerId;
+    }
+  }
+});
+
 function getCountingDownPreciousForm() {
   const priceValue = parseFloat(
     document.getElementById("edit-countingdown-price").value.trim()
@@ -199,6 +214,7 @@ function renderBannerTable(data) {
           class="me-2 avatar-xl"
         />
       </td>
+      <td>${item.id}</td>
       <td>${item.title1}</td>
       <td>${item.title2}</td>
       <td>${item.subtitle}</td>
@@ -216,7 +232,10 @@ function renderBannerTable(data) {
       <td class="text-muted">
         <a
           href="javascript:void(0);"
-          class="link-reset fs-20 p-1" data-banner-id="${item.id}"
+          class="link-reset fs-20 p-1 banner-delete-trash" data-banner-id="${item.id}"
+          data-bs-toggle="modal"
+        data-bs-target="#banner-delete-warning-modal"
+          
         >
           <i class="ti ti-trash"></i>
         </a>
