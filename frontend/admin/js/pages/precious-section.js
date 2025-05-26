@@ -1,5 +1,15 @@
 window.bannerList = [];
-window.countingDown = [];
+// window.countingDown = [];
+window.countingDown = {
+  title: "Collection of Formless Stelluna",
+  price: "999",
+  discount: "666",
+  percentage: "-33%",
+  rating: "5",
+  ddl: "2025/10/30",
+  Url: "https://store.infjew.com/INF-00-00000000",
+  pictureUrl: "images/users/avatar-1.png",
+};
 
 // 登录状态检查模块
 window.addEventListener("DOMContentLoaded", function () {
@@ -34,6 +44,8 @@ window.addEventListener("DOMContentLoaded", function () {
       if (data.success) {
         console.log("Banner 数据：", data.data);
         bannerList = data.data; // 假设返回的数据格式是 { success: true, data: [...] }
+        renderBannerTable(bannerList);
+        toggleAddBannerButton(bannerList);
       } else {
         console.log("获取 Banner 失败:", data.message);
       }
@@ -42,21 +54,7 @@ window.addEventListener("DOMContentLoaded", function () {
       console.error("请求失败:", error);
     });
 
-  window.countingDown = {
-    title: "Collection of Formless Stelluna",
-    price: "999",
-    discount: "666",
-    percentage: "-33%",
-    rating: "5",
-    ddl: "2025/10/30",
-    Url: "https://store.infjew.com/INF-00-00000000",
-    pictureUrl: "images/users/avatar-1.png",
-  };
-
-  renderBannerTable(bannerList);
   renderCountingDownTable(countingDown);
-
-  toggleAddBannerButton(bannerList);
 
   document
     .getElementById("countingdown-precious-edit-btn")
