@@ -3,6 +3,7 @@ package session
 import (
 	"github.com/gorilla/sessions"
 	"net/http"
+	"encoding/json"
 )
 
 var Store = sessions.NewCookieStore([]byte("infinityjewelry")) // 强烈建议改成更复杂的密钥
@@ -28,4 +29,20 @@ func ClearSession(w http.ResponseWriter, r *http.Request) {
 	session, _ := Store.Get(r, "session-id")
 	session.Options.MaxAge = -1
 	session.Save(r, w)
+}
+
+func SessionStatusHandler(w http.ResponseWriter, r *http.Request) {
+	username, ok := GetUsername(r)
+	w.Header().Set("Content-Type", "application/json")
+
+	if ok {
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"loggedIn": true,
+			"username": username,
+		})
+	} else {
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"loggedIn": false,
+		})
+	}
 }
