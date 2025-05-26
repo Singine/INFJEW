@@ -56,19 +56,13 @@ window.addEventListener("DOMContentLoaded", function () {
       if (data.success) {
         console.log("CountingDown 数据：", data.data);
         countingDown = data.data; // 假设返回的数据格式是 { success: true, data: {...} }
-        renderCountingDownTable(countingDown);
+        renderCountingDownTable(countingDown[0]);
       } else {
         console.log("获取 CountingDown 失败:", data.message);
       }
     })
     .catch((error) => {
       console.error("请求失败:", error);
-    });
-
-  document
-    .getElementById("countingdown-precious-edit-btn")
-    .addEventListener("click", function () {
-      fillCountingDownModal(countingDown);
     });
 
   document
@@ -174,7 +168,7 @@ function renderCountingDownTable(data) {
   row.innerHTML = `
     <td>
       <img
-        src="${data.pictureUrl}"
+        src="${data.picurl}"
         alt="table-user"
         class="me-2 avatar-xl"
       />
@@ -193,7 +187,7 @@ function renderCountingDownTable(data) {
         class="link-reset fs-20 p-1 text-infjew"
         data-bs-toggle="tooltip"
         data-bs-trigger="hover"
-        data-bs-title="${data.Url}"
+        data-bs-title="${data.url}"
       >
         <i class="ti ti-link"></i>
       </a>
@@ -220,6 +214,12 @@ function renderCountingDownTable(data) {
   tooltipTriggerList.forEach(function (el) {
     new bootstrap.Tooltip(el);
   });
+
+  document
+    .getElementById("countingdown-precious-edit-btn")
+    .addEventListener("click", function () {
+      fillCountingDownModal(countingDown);
+    });
 }
 
 function fillCountingDownModal(data) {
