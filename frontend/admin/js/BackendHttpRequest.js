@@ -29,6 +29,9 @@ if (loginSubmitBtn) {
           document.getElementById("login-username").value = ""; // 清空用户名输入框
           document.getElementById("login-password").value = ""; // 清空密码输入框
         }
+      })
+      .catch((err) => {
+        console.error("Login error:", err);
       });
   });
 }
@@ -52,6 +55,9 @@ if (logoutBtn) {
         } else {
           console.log("Error:", data.message);
         }
+      })
+      .catch((err) => {
+        console.error("Login error:", err);
       });
   });
 }
