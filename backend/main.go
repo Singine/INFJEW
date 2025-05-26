@@ -13,7 +13,7 @@ func main() {
 		fmt.Fprintf(w, "Hello, World!")
 	})
 
-	http.HandleFunc("/check-id", handler.CheckIDHandler)
+	http.HandleFunc("/check-id", handlers.CheckIDHandler)
 
 	port := ":8080"
 	fmt.Printf("服务器正在运行在 %s\n", port)
