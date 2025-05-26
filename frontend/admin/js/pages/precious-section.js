@@ -30,6 +30,7 @@ window.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       if (data.success) {
         console.log("Banner 数据：", data.data);
+        window.bannerList = data.data; // 假设返回的数据格式是 { success: true, data: [...] }
       } else {
         console.log("获取 Banner 失败:", data.message);
       }
@@ -37,80 +38,59 @@ window.addEventListener("DOMContentLoaded", function () {
     .catch((error) => {
       console.error("请求失败:", error);
     });
-});
 
-window.countingDown = {
-  title: "Collection of Formless Stelluna",
-  price: "999",
-  discount: "666",
-  percentage: "-33%",
-  rating: "5",
-  ddl: "2025/10/30",
-  Url: "https://store.infjew.com/INF-00-00000000",
-  pictureUrl: "images/users/avatar-1.png",
-};
-
-window.bannerList = [
-  {
-    id: 1,
-    title1: "New Collections",
-    title2: "Coming up",
-    subtitle: "Trending products of Summer 2025",
-    Url: "https://store.infjew.com/INF-00-00000001",
+  window.countingDown = {
+    title: "Collection of Formless Stelluna",
+    price: "999",
+    discount: "666",
+    percentage: "-33%",
+    rating: "5",
+    ddl: "2025/10/30",
+    Url: "https://store.infjew.com/INF-00-00000000",
     pictureUrl: "images/users/avatar-1.png",
-  },
-  {
-    id: 2,
-    title1: "New Collections",
-    title2: "Coming up",
-    subtitle: "Trending products of Summer 2025",
-    Url: "https://store.infjew.com/INF-00-00000002",
-    pictureUrl: "images/users/avatar-1.png",
-  },
-];
+  };
 
-renderBannerTable(bannerList);
-renderCountingDownTable(countingDown);
+  renderBannerTable(bannerList);
+  renderCountingDownTable(countingDown);
 
-document.addEventListener("DOMContentLoaded", function () {
   toggleAddBannerButton(bannerList);
-});
 
-document
-  .getElementById("countingdown-precious-edit-btn")
-  .addEventListener("click", function () {
-    fillCountingDownModal(countingDown);
-  });
+  document
+    .getElementById("countingdown-precious-edit-btn")
+    .addEventListener("click", function () {
+      fillCountingDownModal(countingDown);
+    });
 
-document
-  .getElementById("save-countingdown-precious-btn")
-  .addEventListener("click", function () {
-    getCountingDownPreciousForm();
-  });
+  document
+    .getElementById("save-countingdown-precious-btn")
+    .addEventListener("click", function () {
+      getCountingDownPreciousForm();
+    });
 
-// 使用事件委托监听 .banner-delete-trash 的点击事件
-document.addEventListener("click", function (e) {
-  // 判断是否点击的是 .banner-delete-trash 元素
-  if (e.target.closest(".banner-delete-trash")) {
-    const target = e.target.closest(".banner-delete-trash");
-    const bannerId = target.getAttribute("data-banner-id"); // 获取 data-banner-id 的值
+  // 使用事件委托监听 .banner-delete-trash 的点击事件
+  document.addEventListener("click", function (e) {
+    // 判断是否点击的是 .banner-delete-trash 元素
+    if (e.target.closest(".banner-delete-trash")) {
+      const target = e.target.closest(".banner-delete-trash");
+      const bannerId = target.getAttribute("data-banner-id"); // 获取 data-banner-id 的值
 
-    // 设置 #delete-banner-id 元素的内容为 bannerId
-    const idContainer = document.getElementById("delete-banner-id");
-    if (idContainer) {
-      idContainer.innerHTML = bannerId;
+      // 设置 #delete-banner-id 元素的内容为 bannerId
+      const idContainer = document.getElementById("delete-banner-id");
+      if (idContainer) {
+        idContainer.innerHTML = bannerId;
+      }
     }
-  }
-});
-
-document
-  .getElementById("confirm-delete-banner-btn")
-  .addEventListener("click", function () {
-    // 目标 URL，根据你的后端接口改成真实地址
-    const url = "https://www.infjew.com/api/hello";
-
-    GetHttpRequest(url);
   });
+
+  document
+    .getElementById("confirm-delete-banner-btn")
+    .addEventListener("click", function () {
+      // 目标 URL，根据你的后端接口改成真实地址
+      const url = "https://www.infjew.com/api/hello";
+
+      GetHttpRequest(url);
+    });
+});
 
 function getCountingDownPreciousForm() {
   const priceValue = parseFloat(
@@ -259,7 +239,7 @@ function renderBannerTable(data) {
     row.innerHTML = `
       <td>
         <img
-          src="${item.pictureUrl}"
+          src="${item.picurl}"
           alt="table-user"
           class="me-2 avatar-xl"
         />
@@ -274,7 +254,7 @@ function renderBannerTable(data) {
           class="link-reset fs-20 p-1 text-infjew"
           data-bs-toggle="tooltip"
           data-bs-trigger="hover"
-          data-bs-title="${item.Url}"
+          data-bs-title="${item.url}"
         >
           <i class="ti ti-link"></i>
         </a>
