@@ -25,10 +25,6 @@ func main() {
     mux.Handle("/api/hello", helloWithCORS)
 
 
-	// 路由
-	JumpTo_Login_WithCORS := middleware.WithCORS(http.HandlerFunc(handlers.LoginHandler))
-	mux.Handle("/login", JumpTo_Login_WithCORS)
-
 
 
     http.ListenAndServe(":8080", mux)
