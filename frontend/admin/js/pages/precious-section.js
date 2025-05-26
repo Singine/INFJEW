@@ -1,3 +1,6 @@
+window.bannerList = [];
+window.countingDown = [];
+
 // 登录状态检查模块
 window.addEventListener("DOMContentLoaded", function () {
   fetch("https://www.infjew.com/api/session/status", {
@@ -30,7 +33,7 @@ window.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       if (data.success) {
         console.log("Banner 数据：", data.data);
-        window.bannerList = data.data; // 假设返回的数据格式是 { success: true, data: [...] }
+        bannerList = data.data; // 假设返回的数据格式是 { success: true, data: [...] }
       } else {
         console.log("获取 Banner 失败:", data.message);
       }
