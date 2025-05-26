@@ -93,6 +93,7 @@ window.addEventListener("DOMContentLoaded", function () {
 document
   .getElementById("save-countingdown-precious-btn")
   .addEventListener("click", function () {
+    console.log("保存倒计时宝贝按钮被点击");
     getCountingDownPreciousForm();
   });
 
