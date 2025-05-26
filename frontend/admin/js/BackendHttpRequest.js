@@ -45,6 +45,7 @@ if (logoutBtn) {
       headers: {
         "Content-Type": "application/json", // 设置请求头，指定内容格式为 JSON
       },
+      credentials: "include", // 👈 允许携带 cookie
     })
       .then((response) => response.json()) // 解析 JSON 响应
       .then((data) => {
