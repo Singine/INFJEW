@@ -13,8 +13,8 @@ func main() {
 		fmt.Fprintf(w, "Hello, World!")
 	})
 
-	http.HandleFunc("/check-id", handlers.CheckIDHandler)
-	http.HandleFunc("/hello", handlers.HelloHandler) 
+	http.HandleFunc("api/check-id", handlers.CheckIDHandler)
+	http.HandleFunc("api/hello", handlers.HelloHandler) 
 
 
 	port := ":8080"
