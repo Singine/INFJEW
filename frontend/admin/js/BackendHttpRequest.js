@@ -19,7 +19,8 @@ document
       .then(async (response) => {
         if (!response.ok) {
           const errorText = await response.text();
-          throw new Error(errorText || "登录失败");
+          //   throw new Error(errorText || "登录失败");
+          console.log("登录失败：" + errorText);
         }
         return response.json();
       })
