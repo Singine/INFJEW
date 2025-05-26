@@ -30,7 +30,9 @@ func main() {
 	mux.Handle("/api/AuthLogout", AuthLogoutWithCORS)
 
 
-    http.ListenAndServe(":8080", mux)
-	fmt.Printf("服务器正在运行在 %s\n", ":8080")
+    fmt.Println("服务器启动中，监听端口 8080...")
+	if err := http.ListenAndServe(":8080", mux); err != nil {
+		fmt.Printf("服务器启动失败：%v\n", err)
+	}
 
 }
