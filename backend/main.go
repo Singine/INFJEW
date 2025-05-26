@@ -6,25 +6,20 @@ import (
 	"net/http"
 
 	"backend/handlers"
+	"backend/middleware"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, World!")
-	})
+	
+	mux := http.NewServeMux()
+
+	// 使用中间件包裹 handler
+	checkIDWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.CheckIDHandler))
+    helloWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.HelloHandler))
+    mux.Handle("/api/check", helloWithCORS)
+    mux.Handle("/api/hello", helloWithCORS)
 
 
-
-	port := ":8080"
-	fmt.Printf("服务器正在运行在 %s\n", port)
-
-	err := http.ListenAndServe(port, nil)
-	if err != nil {
-		log.Fatal("无法启动服务器:", err)
-	}
-
-
-	http.HandleFunc("/api/check-id", handlers.CheckIDHandler)
-	http.HandleFunc("/api/hello", handlers.HelloHandler) 
+    http.ListenAndServe(":8080", mux)
 
 }
