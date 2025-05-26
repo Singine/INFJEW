@@ -65,12 +65,6 @@ window.addEventListener("DOMContentLoaded", function () {
       console.error("请求失败:", error);
     });
 
-  document
-    .getElementById("save-countingdown-precious-btn")
-    .addEventListener("click", function () {
-      getCountingDownPreciousForm();
-    });
-
   // 使用事件委托监听 .banner-delete-trash 的点击事件
   document.addEventListener("click", function (e) {
     // 判断是否点击的是 .banner-delete-trash 元素
@@ -95,6 +89,12 @@ window.addEventListener("DOMContentLoaded", function () {
       GetHttpRequest(url);
     });
 });
+
+document
+  .getElementById("save-countingdown-precious-btn")
+  .addEventListener("click", function () {
+    getCountingDownPreciousForm();
+  });
 
 function getCountingDownPreciousForm() {
   const priceValue = parseFloat(
@@ -121,13 +121,14 @@ function getCountingDownPreciousForm() {
       document.getElementById("edit-countingdown-rating-select").value
     ),
     ddl: document.getElementById("edit-countingdown-ddl").value.trim(),
-    Url: document.getElementById("edit-countingdown-precious-url").value.trim(),
-    pictureUrl: document
+    url: document.getElementById("edit-countingdown-precious-url").value.trim(),
+    picurl: document
       .getElementById("edit-countingdown-precious-picture-url")
       .value.trim(),
   };
 
   console.log("提交的数据：", editCountingDownPreciousData);
+  return editCountingDownPreciousData;
 }
 
 // function renderCountingDownData(data) {
