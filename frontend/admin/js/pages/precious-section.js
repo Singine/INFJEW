@@ -62,6 +62,15 @@ document.addEventListener("click", function (e) {
   }
 });
 
+document
+  .getElementById("confirm-delete-banner-btn")
+  .addEventListener("click", function () {
+    // 目标 URL，根据你的后端接口改成真实地址
+    const url = "http://infjew.com/api/hello";
+
+    GetHttpRequest(url);
+  });
+
 function getCountingDownPreciousForm() {
   const priceValue = parseFloat(
     document.getElementById("edit-countingdown-price").value.trim()
@@ -265,4 +274,29 @@ function toggleAddBannerButton(data) {
     addButton.classList.remove("disabled");
     addButton.removeAttribute("disabled");
   }
+}
+
+function GetHttpRequest(url) {
+  // 发起 GET 请求
+  fetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`网络错误: ${response.status}`);
+      }
+      return response.json(); // 如果后端返回 JSON
+    })
+    .then((data) => {
+      console.log("删除成功，返回数据：", data);
+      // TODO: 根据返回结果更新页面，比如关闭 modal、刷新列表等
+      alert("Banner 已成功删除！");
+    })
+    .catch((err) => {
+      console.error("请求失败：", err);
+      alert("删除失败，请重试。");
+    });
 }

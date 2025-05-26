@@ -13,8 +13,6 @@ func main() {
 		fmt.Fprintf(w, "Hello, World!")
 	})
 
-	http.HandleFunc("/api/check-id", handlers.CheckIDHandler)
-	http.HandleFunc("/api/hello", handlers.HelloHandler) 
 
 
 	port := ":8080"
@@ -24,4 +22,9 @@ func main() {
 	if err != nil {
 		log.Fatal("无法启动服务器:", err)
 	}
+
+
+	http.HandleFunc("/api/check-id", handlers.CheckIDHandler)
+	http.HandleFunc("/api/hello", handlers.HelloHandler) 
+
 }
