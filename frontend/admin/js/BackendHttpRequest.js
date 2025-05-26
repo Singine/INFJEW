@@ -10,7 +10,7 @@ if (loginSubmitBtn) {
       return;
     }
 
-    fetch("http://www.infjew.com/api/AuthLogin", {
+    fetch("https://www.infjew.com/api/AuthLogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ if (loginSubmitBtn) {
         console.log("Response data:", data); // 打印响应数据以便调试
         if (data.success) {
           console.log("Login successful");
-          window.location.href = "http://dashboard.infjew.com";
+          window.location.href = "https://dashboard.infjew.com";
         } else {
           console.log("Error:", data.message); // 处理错误信息
           document.getElementById("login-username").value = ""; // 清空用户名输入框
@@ -40,7 +40,7 @@ if (loginSubmitBtn) {
 const logoutBtn = document.getElementById("logout-btn");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", function () {
-    fetch("http://www.infjew.com/api/AuthLogout", {
+    fetch("https://www.infjew.com/api/AuthLogout", {
       method: "POST", // 使用 POST 方法
       headers: {
         "Content-Type": "application/json", // 设置请求头，指定内容格式为 JSON
@@ -51,7 +51,7 @@ if (logoutBtn) {
       .then((data) => {
         if (data.success) {
           console.log("Logout successful");
-          window.location.href = "http://www.infjew.com/login";
+          window.location.href = "https://www.infjew.com/login";
           // 这里可以清除前端的用户状态，例如删除存储的 token 或清空用户信息
         } else {
           console.log("Error:", data.message);
