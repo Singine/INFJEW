@@ -16,10 +16,11 @@ func main() {
 	// 使用中间件包裹 handler
 	checkIDWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.CheckIDHandler))
     helloWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.HelloHandler))
-    mux.Handle("/api/check", helloWithCORS)
+    mux.Handle("/api/check", checkIDWithCORS)
     mux.Handle("/api/hello", helloWithCORS)
 
 
     http.ListenAndServe(":8080", mux)
+	fmt.Printf("服务器正在运行在 %s\n", ":8080")
 
 }
