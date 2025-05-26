@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Singine/INFJEW/backend/handlers" // 替换成你的 module 名
+	"backend/handlers"
 )
 
 func main() {
