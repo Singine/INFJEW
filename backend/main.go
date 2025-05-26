@@ -25,6 +25,11 @@ func main() {
     mux.Handle("/api/hello", helloWithCORS)
 
 
+	// 路由
+	http.HandleFunc("/login", handlers.LoginHandler)
+
+
+
     http.ListenAndServe(":8080", mux)
 	fmt.Printf("服务器正在运行在 %s\n", ":8080")
 
