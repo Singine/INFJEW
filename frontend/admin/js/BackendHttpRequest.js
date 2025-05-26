@@ -47,6 +47,7 @@ if (logoutBtn) {
       .then((data) => {
         if (data.success) {
           console.log("Logout successful");
+          window.location.href = "http://www.infjew.com/login";
           // 这里可以清除前端的用户状态，例如删除存储的 token 或清空用户信息
         } else {
           console.log("Error:", data.message);
