@@ -216,12 +216,13 @@ function renderCountingDownTable(data) {
       fillCountingDownModal(countingDown);
     });
 
-  document
-    .getElementById("save-countingdown-precious-btn")
-    .addEventListener("click", function () {
+  document.addEventListener("click", function (e) {
+    const target = e.target;
+    if (target && target.id === "save-countingdown-precious-btn") {
       console.log("保存倒计时商品数据");
       getCountingDownPreciousForm();
-    });
+    }
+  });
 }
 
 function fillCountingDownModal(data) {
