@@ -106,6 +106,12 @@ window.addEventListener("DOMContentLoaded", function () {
             console.log("✅ Banner 新增成功");
             renderBannerTable(data.data); // 重新渲染 banner 表格
             toggleAddBannerButton(data.data); // 更新添加按钮状态
+
+            // 成功后可自动关闭 Modal
+            const modal = bootstrap.Modal.getInstance(
+              document.getElementById("AddBannerModal")
+            );
+            if (modal) modal.hide();
           } else {
             console.error("❌ 新增失败: ", data.message);
           }
