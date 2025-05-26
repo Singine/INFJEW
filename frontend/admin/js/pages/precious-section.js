@@ -219,8 +219,51 @@ function renderCountingDownTable(data) {
   document.addEventListener("click", function (e) {
     const target = e.target;
     if (target && target.id === "save-countingdown-precious-btn") {
-      console.log("保存倒计时商品数据");
-      getCountingDownPreciousForm();
+      const updatedData = getCountingDownPreciousForm();
+
+      fetch("https://www.infjew.com/api/update-countingdown", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // 带上 Cookie
+        body: JSON.stringify(updatedData),
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.success) {
+            console.log("✅ 更新成功");
+
+            // 重新获取最新 countingDown 数据
+            fetch("https://www.infjew.com/api/countingdown", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.success) {
+                  countingDown = data.data[0];
+                  renderCountingDownTable(countingDown);
+
+                  // 成功后可自动关闭 Modal
+                  const modal = bootstrap.Modal.getInstance(
+                    document.getElementById("EditCountingDownModal")
+                  );
+                  if (modal) modal.hide();
+                } else {
+                  console.error("❌ 更新后拉取最新数据失败:", data.message);
+                }
+              });
+          } else {
+            console.error("❌ 更新失败:", res.message);
+          }
+        })
+        .catch((err) => {
+          console.error("❌ 请求更新失败:", err);
+        });
     }
   });
 }
