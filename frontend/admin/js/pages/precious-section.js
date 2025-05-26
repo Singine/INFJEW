@@ -90,13 +90,6 @@ window.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-document
-  .getElementById("save-countingdown-precious-btn")
-  .addEventListener("click", function () {
-    console.log("保存倒计时宝贝按钮被点击");
-    getCountingDownPreciousForm();
-  });
-
 function getCountingDownPreciousForm() {
   const priceValue = parseFloat(
     document.getElementById("edit-countingdown-price").value.trim()
@@ -216,6 +209,12 @@ function renderCountingDownTable(data) {
   tooltipTriggerList.forEach(function (el) {
     new bootstrap.Tooltip(el);
   });
+
+  document
+    .getElementById("save-countingdown-precious-btn")
+    .addEventListener("click", function () {
+      getCountingDownPreciousForm();
+    });
 
   document
     .getElementById("countingdown-precious-edit-btn")
