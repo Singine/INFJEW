@@ -33,6 +33,9 @@ func main() {
 	sessionStatusWithCORS := middleware.WithCORS(http.HandlerFunc(session.SessionStatusHandler))
 	mux.Handle("/api/session/status", sessionStatusWithCORS)
 
+	bannersWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.GetBannersHandler))
+	mux.Handle("/api/banners", bannersWithCORS)
+
 
     fmt.Println("服务器启动中，监听端口 8080...")
 	if err := http.ListenAndServe(":8080", mux); err != nil {

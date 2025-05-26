@@ -1,3 +1,44 @@
+// 登录状态检查模块
+window.addEventListener("DOMContentLoaded", function () {
+  fetch("https://www.infjew.com/api/session/status", {
+    method: "GET",
+    credentials: "include", // 关键：带上 Cookie
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.loggedIn) {
+        // 未登录，跳转回登录页
+        window.location.href = "https://www.infjew.com/login";
+      } else {
+        console.log("✅ 已登录用户:", data.username);
+      }
+    })
+    .catch((err) => {
+      console.error("❌ Session 检查失败:", err);
+      // 如果请求失败也跳转（比如服务挂了）
+      window.location.href = "https://www.infjew.com/login";
+    });
+
+  fetch("https://www.infjew.com/api/banners", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include", // 如果需要携带 Cookie
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        console.log("Banner 数据：", data.data);
+      } else {
+        console.log("获取 Banner 失败:", data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("请求失败:", error);
+    });
+});
+
 window.countingDown = {
   title: "Collection of Formless Stelluna",
   price: "999",
@@ -274,29 +315,4 @@ function toggleAddBannerButton(data) {
     addButton.classList.remove("disabled");
     addButton.removeAttribute("disabled");
   }
-}
-
-function GetHttpRequest(url) {
-  // 发起 GET 请求
-  fetch(url, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`网络错误: ${response.status}`);
-      }
-      return response.json(); // 如果后端返回 JSON
-    })
-    .then((data) => {
-      console.log("删除成功，返回数据：", data);
-      // TODO: 根据返回结果更新页面，比如关闭 modal、刷新列表等
-      alert("Banner 已成功删除！");
-    })
-    .catch((err) => {
-      console.error("请求失败：", err);
-      alert("删除失败，请重试。");
-    });
 }
