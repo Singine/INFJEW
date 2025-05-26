@@ -10,6 +10,7 @@ func WithCORS(next http.Handler) http.Handler {
         w.Header().Set("Access-Control-Allow-Origin", "*") // 生产建议改为指定域名
         w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		w.Header().Set("Content-Type", "application/json")
 
         // 如果是预检请求，直接返回 200
         if r.Method == http.MethodOptions {

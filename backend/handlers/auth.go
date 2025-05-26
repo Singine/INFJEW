@@ -55,3 +55,18 @@ func AuthLoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resp)
 }
+
+func AuthLogoutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// 这里可以添加注销逻辑，比如清除会话或 JWT Token
+	
+	resp := LoginResponse{
+		Success: true,
+		Message: "Logout successful",
+	}
+	json.NewEncoder(w).Encode(resp)
+}

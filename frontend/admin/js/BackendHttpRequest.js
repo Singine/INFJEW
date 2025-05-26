@@ -32,3 +32,23 @@ document
         alert("登录失败：" + error.message);
       });
   });
+
+document.getElementById("logout-btn").addEventListener("click", function () {
+  fetch("http://www.infjew.com/api/AuthLogout", {
+    method: "POST",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        alert("登出成功！");
+        // localStorage.removeItem("token"); // 如果将来你用 JWT
+        window.location.href = "http://www.infjew.com/login";
+      } else {
+        alert("登出失败：" + data.message);
+      }
+    })
+    .catch((err) => {
+      console.error("登出请求失败", err);
+      alert("请求失败，请稍后重试");
+    });
+});
