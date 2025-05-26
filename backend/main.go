@@ -24,7 +24,8 @@ func main() {
     mux.Handle("/api/check", checkIDWithCORS)
     mux.Handle("/api/hello", helloWithCORS)
 
-
+	AuthLoginWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.AuthLoginHandler))
+	mux.Handle("/api/AuthLogin", AuthLoginWithCORS)
 
 
     http.ListenAndServe(":8080", mux)
