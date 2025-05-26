@@ -136,7 +136,7 @@ func DeleteBannerHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-// 新增 Banner
+// 创建新 Banner
 func CreateBannerHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -148,14 +148,9 @@ func CreateBannerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 解析请求体
-	var data struct {
-		Title1   string `json:"title1"`
-		Title2   string `json:"title2"`
-		Subtitle string `json:"subtitle"`
-		URL      string `json:"url"`
-	}
+	var data Banner
 	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
-		log.Printf("❌ JSON 解析失败: %v", err)
+		log.Printf("❌ 请求体解析失败: %v", err)
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"success": false,
@@ -164,12 +159,12 @@ func CreateBannerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 插入新数据
+	// 插入数据库
 	insertQuery := `
-		INSERT INTO banner (title1, title2, subtitle, url)
-		VALUES (?, ?, ?, ?)
+		INSERT INTO banner (title1, title2, subtitle, url, picurl)
+		VALUES (?, ?, ?, ?, ?)
 	`
-	_, err := db.DB.Exec(insertQuery, data.Title1, data.Title2, data.Subtitle, data.URL)
+	_, err := db.DB.Exec(insertQuery, data.Title1, data.Title2, data.Subtitle, data.URL, data.PicURL)
 	if err != nil {
 		log.Printf("❌ 插入数据失败: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -180,10 +175,10 @@ func CreateBannerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 插入成功后返回全部 banner 数据
+	// 查询插入后的所有数据并返回
 	rows, err := db.DB.Query("SELECT id, title1, title2, subtitle, url, picurl FROM banner")
 	if err != nil {
-		log.Printf("❌ 查询数据失败: %v", err)
+		log.Printf("❌ 查询所有 banner 失败: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]interface{}{
 			"success": false,
@@ -195,22 +190,17 @@ func CreateBannerHandler(w http.ResponseWriter, r *http.Request) {
 
 	var banners []Banner
 	for rows.Next() {
-		var banner Banner
-		if err := rows.Scan(&banner.ID, &banner.Title1, &banner.Title2, &banner.Subtitle, &banner.URL, &banner.PicURL); err != nil {
-			log.Printf("❌ 数据行解析失败: %v", err)
-			json.NewEncoder(w).Encode(map[string]interface{}{
-				"success": false,
-				"message": "数据读取失败",
-			})
-			return
+		var b Banner
+		if err := rows.Scan(&b.ID, &b.Title1, &b.Title2, &b.Subtitle, &b.URL, &b.PicURL); err != nil {
+			log.Printf("❌ 扫描行失败: %v", err)
+			continue
 		}
-		banners = append(banners, banner)
+		banners = append(banners, b)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"success": true,
-		"message": "新增成功",
+		"message": "添加成功",
 		"data":    banners,
 	})
 }
