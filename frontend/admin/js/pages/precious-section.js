@@ -106,10 +106,12 @@ function getCountingDownPreciousForm() {
   }
   const editCountingDownPreciousData = {
     title: document.getElementById("edit-countingdown-title").value.trim(),
-    price: document.getElementById("edit-countingdown-price").value.trim(),
-    discount: document
-      .getElementById("edit-countingdown-discount")
-      .value.trim(),
+    price: parseInt(
+      document.getElementById("edit-countingdown-price").value.trim()
+    ),
+    discount: parseInt(
+      document.getElementById("edit-countingdown-discount").value.trim()
+    ),
     percentage: `${percentageValue}%`,
     rating: parseInt(
       document.getElementById("edit-countingdown-rating-select").value
