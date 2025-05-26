@@ -83,10 +83,9 @@ window.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("confirm-delete-banner-btn")
     .addEventListener("click", function () {
+      const id = document.getElementById("delete-banner-id");
       // 目标 URL，根据你的后端接口改成真实地址
-      const url = "https://www.infjew.com/api/hello";
-
-      GetHttpRequest(url);
+      deleteBanner(id);
     });
 });
 
@@ -353,4 +352,29 @@ function toggleAddBannerButton(data) {
     addButton.classList.remove("disabled");
     addButton.removeAttribute("disabled");
   }
+}
+
+function deleteBanner(bannerId) {
+  fetch("https://www.infjew.com/api/banner/delete", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: bannerId,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        console.log("Banner 删除成功");
+        // 删除成功后重新渲染 banner 列表
+        renderBannerTable(data.data); // 重新渲染
+      } else {
+        console.log("Banner 删除失败:", data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("请求失败:", error);
+    });
 }

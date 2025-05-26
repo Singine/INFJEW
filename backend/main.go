@@ -35,17 +35,21 @@ func main() {
 
 	bannersWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.GetBannersHandler))
 	mux.Handle("/api/banners", bannersWithCORS)
+	mux.Handle("/api/banner/delete", middleware.WithCORS(http.HandlerFunc(handlers.DeleteBannerHandler)))
+
 
 	countingDownWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.GetCountingDownHandler))
 	mux.Handle("/api/countingdown", countingDownWithCORS)
-
 	mux.Handle("/api/countingdown/update", middleware.WithCORS(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodOptions {
-		w.WriteHeader(http.StatusOK)
-		return
-	}
-	handlers.UpdateCountingDownHandler(w, r)
-})))
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		handlers.UpdateCountingDownHandler(w, r)
+	})))
+
+
+
 
     fmt.Println("服务器启动中，监听端口 8080...")
 	if err := http.ListenAndServe(":8080", mux); err != nil {

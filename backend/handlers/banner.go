@@ -60,3 +60,77 @@ func GetBannersHandler(w http.ResponseWriter, r *http.Request) {
 		"data":    banners,
 	})
 }
+
+
+// 删除 Banner
+func DeleteBannerHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "Method Not Allowed",
+		})
+		return
+	}
+
+	// 获取请求中的 ID 参数
+	var data struct {
+		ID int `json:"id"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		log.Printf("❌ JSON 解析失败: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "请求体解析失败",
+		})
+		return
+	}
+
+	// 删除指定 ID 的 banner
+	query := "DELETE FROM banner WHERE id = ?"
+	_, err := db.DB.Exec(query, data.ID)
+	if err != nil {
+		log.Printf("❌ 删除 Banner 失败: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "删除失败",
+		})
+		return
+	}
+
+	// 获取当前所有 banner 数据并返回
+	rows, err := db.DB.Query("SELECT id, title1, title2, subtitle, url, picurl FROM banner")
+	if err != nil {
+		log.Printf("❌ 数据库查询失败: %v", err)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "数据库查询失败",
+		})
+		return
+	}
+	defer rows.Close()
+
+	var banners []Banner
+	for rows.Next() {
+		var banner Banner
+		if err := rows.Scan(&banner.ID, &banner.Title1, &banner.Title2, &banner.Subtitle, &banner.URL, &banner.PicURL); err != nil {
+			log.Printf("❌ 数据行扫描失败: %v", err)
+			json.NewEncoder(w).Encode(map[string]interface{}{
+				"success": false,
+				"message": "Error processing data",
+			})
+			return
+		}
+		banners = append(banners, banner)
+	}
+
+	// 返回删除后的 banner 列表
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"success": true,
+		"message": "Banner 删除成功",
+		"data":    banners,
+	})
+}
