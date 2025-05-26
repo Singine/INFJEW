@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	
+	"log"
 
 	"backend/db"
 	"golang.org/x/crypto/bcrypt"
@@ -28,6 +30,7 @@ func AuthLoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		log.Printf("❌ JSON 解码失败: %v", err)
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
@@ -35,18 +38,23 @@ func AuthLoginHandler(w http.ResponseWriter, r *http.Request) {
 	var hashedPassword string
 	err := db.DB.QueryRow("SELECT password FROM users WHERE username = ?", req.Username).Scan(&hashedPassword)
 	if err == sql.ErrNoRows {
+		log.Printf("❌ 用户不存在: %s", req.Username)
 		http.Error(w, "Invalid username or password", http.StatusUnauthorized)
 		return
 	} else if err != nil {
+		log.Printf("❌ 数据库查询失败: %v", err)
 		http.Error(w, "Server error", http.StatusInternalServerError)
 		return
 	}
 
 	// 验证密码
 	if err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(req.Password)); err != nil {
+		log.Printf("❌ 密码不匹配: %v", err)
 		http.Error(w, "Invalid username or password", http.StatusUnauthorized)
 		return
 	}
+
+	log.Printf("✅ 登录成功: %s", req.Username)
 
 	resp := LoginResponse{
 		Success: true,
