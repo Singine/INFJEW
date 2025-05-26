@@ -22,9 +22,11 @@ if (loginSubmitBtn) {
         console.log("Response data:", data); // 打印响应数据以便调试
         if (data.success) {
           console.log("Login successful");
-          //   window.location.href = "http://dashboard.infjew.com";
+          window.location.href = "http://dashboard.infjew.com";
         } else {
           console.log("Error:", data.message); // 处理错误信息
+          document.getElementById("login-username").value = ""; // 清空用户名输入框
+          document.getElementById("login-password").value = ""; // 清空密码输入框
         }
       });
   });
