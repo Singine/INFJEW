@@ -5,7 +5,7 @@ document
     const password = document.getElementById("login-password").value.trim();
 
     if (!username || !password) {
-      alert("请输入用户名和密码");
+      console.log("请输入用户名和密码");
       return;
     }
 
@@ -14,7 +14,7 @@ document
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username: username, password: password }),
     })
       .then(async (response) => {
         if (!response.ok) {
