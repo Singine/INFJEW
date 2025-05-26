@@ -6,9 +6,23 @@ import (
 
 	"backend/handlers"
 	"backend/middleware"
+
+	"backend/db"
+
+	// 引入 gorilla/sessions 包用于会话管理
+	"github.com/gorilla/sessions"
 )
 
+var store = sessions.NewCookieStore([]byte("a-very-secret-key")) // 用于加密 session
+	
+
 func main() {
+
+	db.InitDB()
+
+	http.HandleFunc("/login", handlers.LoginHandler)
+	http.HandleFunc("/extend-session", handlers.ExtendSessionHandler)
+
 	
 	mux := http.NewServeMux()
 
