@@ -9,6 +9,8 @@ import (
 
 	"backend/db"
 	"golang.org/x/crypto/bcrypt"
+
+	"backend/session"
 )
 
 type LoginRequest struct {
@@ -69,6 +71,16 @@ func AuthLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := session.InitSession(w, r, req.Username); err != nil {
+		log.Printf("❌ 设置 session 失败: %v", err)
+		
+		json.NewEncoder(w).Encode(LoginResponse{
+			Success: false,
+			Message: "Session error", // 统一错误提示
+		})
+		return
+	}
+
 	log.Printf("✅ 登录成功: %s", req.Username)
 
 	resp := LoginResponse{
@@ -76,6 +88,8 @@ func AuthLoginHandler(w http.ResponseWriter, r *http.Request) {
 		Message: "Login successful",
 	}
 	json.NewEncoder(w).Encode(resp)
+
+	
 }
 
 func AuthLogoutHandler(w http.ResponseWriter, r *http.Request) {
@@ -87,6 +101,7 @@ func AuthLogoutHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	session.ClearSession(w, r)
 	// 这里可以添加注销逻辑，比如清除会话或 JWT Token
 	
 	resp := LoginResponse{

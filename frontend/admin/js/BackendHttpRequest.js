@@ -15,6 +15,7 @@ if (loginSubmitBtn) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include", // 👈 允许携带 cookie
       body: JSON.stringify({ username: username, password: password }),
     })
       .then((response) => response.json())
