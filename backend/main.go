@@ -36,6 +36,7 @@ func main() {
 	bannersWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.GetBannersHandler))
 	mux.Handle("/api/banners", bannersWithCORS)
 	mux.Handle("/api/banner/delete", middleware.WithCORS(http.HandlerFunc(handlers.DeleteBannerHandler)))
+	mux.Handle("/api/banner/create", middleware.WithCORS(http.HandlerFunc(handlers.CreateBannerHandler)))
 
 
 	countingDownWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.GetCountingDownHandler))

@@ -89,7 +89,44 @@ window.addEventListener("DOMContentLoaded", function () {
       // 目标 URL，根据你的后端接口改成真实地址
       deleteBanner(id);
     });
+
+  document.addEventListener("click", function (e) {
+    const target = e.target;
+    if (target && target.id === "add-banner-btn") {
+      fetch("https://www.infjew.com/api/banner/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(getAddBannerForm()),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            console.log("✅ Banner 新增成功");
+            renderBannerTable(data.data); // 重新渲染 banner 表格
+            toggleAddBannerButton(data.data); // 更新添加按钮状态
+          } else {
+            console.error("❌ 新增失败: ", data.message);
+          }
+        })
+        .catch((err) => {
+          console.error("❌ 请求错误: ", err);
+        });
+    }
+  });
 });
+
+function getAddBannerForm() {
+  const newBanner = {
+    title1: document.getElementById("add-banner-title-1").value.trim(),
+    title2: document.getElementById("add-banner-title-2").value.trim(),
+    subtitle: document.getElementById("add-banner-subtitle").value.trim(),
+    url: document.getElementById("add-banner-url").value.trim(),
+    picurl: document.getElementById("add-banner-picture-url").value.trim(),
+  };
+  return newBanner;
+}
 
 function getCountingDownPreciousForm() {
   const priceValue = parseFloat(
@@ -372,6 +409,7 @@ function deleteBanner(bannerId) {
         console.log("Banner 删除成功");
         // 删除成功后重新渲染 banner 列表
         renderBannerTable(data.data); // 重新渲染
+        toggleAddBannerButton(data.data); // 更新添加按钮状态
       } else {
         console.log("Banner 删除失败:", data.message);
       }
