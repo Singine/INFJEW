@@ -1,9 +1,10 @@
-
 package session
 
 import (
 	"encoding/json"
+	"github.com/gorilla/sessions"
 	"net/http"
+	"backend/session"
 )
 
 func SessionStatusHandler(w http.ResponseWriter, r *http.Request) {
