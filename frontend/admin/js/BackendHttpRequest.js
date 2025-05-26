@@ -16,40 +16,31 @@ document
       },
       body: JSON.stringify({ username: username, password: password }),
     })
-      .then(async (response) => {
-        if (!response.ok) {
-          const errorText = await response.text();
-          //   throw new Error(errorText || "登录失败");
-          console.log("登录失败：" + errorText);
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log("登录成功");
-        // 之后加 JWT 的话可以存 token: localStorage.setItem("token", data.token)
-        window.location.href = "http://dashboard.infjew.com";
-      })
-      .catch((error) => {
-        console.log("登录失败：" + error.message);
+        if (data.success) {
+          console.log("Login successful");
+          window.location.href = "http://dashboard.infjew.com";
+        } else {
+          console.log("Error:", data.message); // 处理错误信息
+        }
       });
   });
 
 document.getElementById("logout-btn").addEventListener("click", function () {
   fetch("http://www.infjew.com/api/AuthLogout", {
-    method: "POST",
+    method: "POST", // 使用 POST 方法
+    headers: {
+      "Content-Type": "application/json", // 设置请求头，指定内容格式为 JSON
+    },
   })
-    .then((res) => res.json())
+    .then((response) => response.json()) // 解析 JSON 响应
     .then((data) => {
       if (data.success) {
-        alert("登出成功！");
-        // localStorage.removeItem("token"); // 如果将来你用 JWT
-        window.location.href = "http://www.infjew.com/login";
+        console.log("Logout successful");
+        // 这里可以清除前端的用户状态，例如删除存储的 token 或清空用户信息
       } else {
-        alert("登出失败：" + data.message);
+        console.log("Error:", data.message);
       }
-    })
-    .catch((err) => {
-      console.error("登出请求失败", err);
-      alert("请求失败，请稍后重试");
     });
 });

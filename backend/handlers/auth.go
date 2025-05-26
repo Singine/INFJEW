@@ -24,14 +24,20 @@ type LoginResponse struct {
 
 func AuthLoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(LoginResponse{
+			Success: false,
+			Message: "Method Not Allowed",
+		})
 		return
 	}
 
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		log.Printf("❌ JSON 解码失败: %v", err)
-		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		json.NewEncoder(w).Encode(LoginResponse{
+			Success: false,
+			Message: "Invalid JSON",
+		})
 		return
 	}
 
@@ -39,18 +45,27 @@ func AuthLoginHandler(w http.ResponseWriter, r *http.Request) {
 	err := db.DB.QueryRow("SELECT password FROM account WHERE username = ?", req.Username).Scan(&hashedPassword)
 	if err == sql.ErrNoRows {
 		log.Printf("❌ 用户不存在: %s", req.Username)
-		http.Error(w, "Invalid username or password", http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(LoginResponse{
+			Success: false,
+			Message: "Invalid username or password", // 统一错误提示
+		})
 		return
 	} else if err != nil {
 		log.Printf("❌ 数据库查询失败: %v", err)
-		http.Error(w, "Server error", http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(LoginResponse{
+			Success: false,
+			Message: "MySql Server error",
+		})
 		return
 	}
 
 	// 验证密码
 	if err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(req.Password)); err != nil {
 		log.Printf("❌ 密码不匹配: %v", err)
-		http.Error(w, "Invalid username or password", http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(LoginResponse{
+			Success: false,
+			Message: "Invalid username or password", // 统一错误提示
+		})
 		return
 	}
 
@@ -60,13 +75,15 @@ func AuthLoginHandler(w http.ResponseWriter, r *http.Request) {
 		Success: true,
 		Message: "Login successful",
 	}
-	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resp)
 }
 
 func AuthLogoutHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(LoginResponse{
+			Success: false,
+			Message: "Method Not Allowed",
+		})
 		return
 	}
 
