@@ -24,7 +24,7 @@ document
         return response.json();
       })
       .then((data) => {
-        alert("登录成功");
+        console.log("登录成功");
         // 之后加 JWT 的话可以存 token: localStorage.setItem("token", data.token)
         window.location.href = "http://dashboard.infjew.com";
       })
