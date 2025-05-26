@@ -221,7 +221,7 @@ function renderCountingDownTable(data) {
     if (target && target.id === "save-countingdown-precious-btn") {
       const updatedData = getCountingDownPreciousForm();
 
-      fetch("https://www.infjew.com/api/update-countingdown", {
+      fetch("https://www.infjew.com/api/countingdown/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
