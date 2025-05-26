@@ -27,7 +27,7 @@ func main() {
 
 	// 路由
 	JumpTo_Login_WithCORS := middleware.WithCORS(http.HandlerFunc(handlers.LoginHandler))
-	mux.HandleFunc("/login", JumpTo_Login_WithCORS)
+	mux.Handle("/login", JumpTo_Login_WithCORS)
 
 
 
