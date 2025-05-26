@@ -83,7 +83,9 @@ window.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("confirm-delete-banner-btn")
     .addEventListener("click", function () {
-      const id = document.getElementById("delete-banner-id");
+      const id = parseInt(
+        document.getElementById("delete-banner-id").innerHTML.trim()
+      );
       // 目标 URL，根据你的后端接口改成真实地址
       deleteBanner(id);
     });
