@@ -55,8 +55,8 @@ window.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       if (data.success) {
         console.log("CountingDown 数据：", data.data);
-        countingDown = data.data; // 假设返回的数据格式是 { success: true, data: {...} }
-        renderCountingDownTable(countingDown[0]);
+        countingDown = data.data[0]; // 假设返回的数据格式是 { success: true, data: {...} }
+        renderCountingDownTable(countingDown);
       } else {
         console.log("获取 CountingDown 失败:", data.message);
       }
@@ -232,9 +232,9 @@ function fillCountingDownModal(data) {
     data.rating || "1";
   document.getElementById("edit-countingdown-ddl").value = data.ddl || "";
   document.getElementById("edit-countingdown-precious-url").value =
-    data.Url || "";
+    data.url || "";
   document.getElementById("edit-countingdown-precious-picture-url").value =
-    data.pictureUrl || "";
+    data.picurl || "";
 }
 
 function renderBannerTable(data) {
