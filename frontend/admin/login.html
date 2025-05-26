@@ -102,5 +102,20 @@
     <script src="admin/js/app.js"></script>
 
     <script src="admin/js/BackendHttpRequest.js"></script>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        fetch("http://www.infjew.com/api/session/status", {
+          credentials: "include", // 必须带上 cookie
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.loggedIn) {
+              // 已登录用户自动跳转
+              window.location.href = "http://dashboard.infjew.com";
+            }
+          });
+      });
+    </script>
   </body>
 </html>

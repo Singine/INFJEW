@@ -7,6 +7,7 @@ import (
 	"backend/handlers"
 	"backend/middleware"
 	"backend/db"
+	"backend/session"
 	
 )
 
@@ -28,6 +29,9 @@ func main() {
 	mux.Handle("/api/AuthLogin", AuthLoginWithCORS)
 	AuthLogoutWithCORS := middleware.WithCORS(http.HandlerFunc(handlers.AuthLogoutHandler))
 	mux.Handle("/api/AuthLogout", AuthLogoutWithCORS)
+
+	sessionStatusWithCORS := middleware.WithCORS(http.HandlerFunc(session.SessionStatusHandler))
+	mux.Handle("/api/session/status", sessionStatusWithCORS)
 
 
     fmt.Println("服务器启动中，监听端口 8080...")
