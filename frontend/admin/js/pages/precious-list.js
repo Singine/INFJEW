@@ -110,119 +110,118 @@ function fetchAndRenderPreciousList() {
         return;
       }
 
-      preciousListData = data.data.map((item) => [
-        item.id,
-        item.itemid,
-        item.title,
-        item.tag,
-        item.price,
-        item.discount,
-        item.rating,
-        item.status,
-        item.url,
-        item.picurl,
-        item.id,
-      ]);
-
-      // 清空容器（重要：防止重复 render）
-      const container = document.getElementById("table-gridjs");
-      container.innerHTML = "";
-
-      const grid = new gridjs.Grid({
-        columns: [
-          { name: "ID", width: "50px" },
-          { name: "ItemID", width: "200px" },
-          { name: "Title", width: "250px" },
-          { name: "Tag", width: "120px" },
-          { name: "Price", width: "50px" },
-          { name: "Discount", width: "50px" },
-          { name: "Rating", width: "50px" },
-          {
-            name: "Status",
-            width: "100px",
-            formatter: (e) =>
-              gridjs.html(
-                e === 1
-                  ? '<span class="badge bg-success fs-12 p-1">Active</span>'
-                  : e === 0
-                  ? '<span class="badge bg-primary fs-12 p-1">Sold</span>'
-                  : e === 2
-                  ? '<span class="badge bg-warning fs-12 p-1">Sale</span>'
-                  : e === 3
-                  ? '<span class="badge bg-danger fs-12 p-1">Unavailable</span>'
-                  : '<span class="badge bg-secondary-subtle text-secondary fs-12 p-1">Unknown</span>'
-              ),
-          },
-          {
-            name: "Url",
-            width: "50px",
-            formatter: (e) =>
-              gridjs.html(
-                `<a class="link-reset fs-20 p-1 text-infjew"
-                    data-bs-toggle="tooltip" 
-                    data-bs-trigger="hover" 
-                    data-bs-title="${e}">
-                    <i class="ti ti-link"></i></a>`
-              ),
-          },
-          {
-            name: "PicUrl",
-            width: "50px",
-            formatter: (e) =>
-              gridjs.html(
-                `<a class="link-reset fs-20 p-1 text-info"
-                    data-bs-toggle="tooltip" 
-                    data-bs-trigger="hover" 
-                    data-bs-title="${e}">
-                    <i class="ti ti-link"></i></a>`
-              ),
-          },
-          {
-            name: "Action",
-            width: "100px",
-            formatter: (e) =>
-              gridjs.html(
-                `<div class="hstack gap-2">
-                  <a data-bs-toggle="modal" data-bs-target="#EditPreciousModal" 
-                     data-id="${e}" 
-                     class="btn btn-soft-success btn-icon btn-sm rounded-circle table-edit-precious-btn">
-                    <i class="ti ti-edit fs-16"></i>
-                  </a>
-                  <a href="javascript:void(0);" 
-                     class="btn btn-soft-danger btn-icon btn-sm rounded-circle sweet-delete-btn" 
-                     data-id="${e}">
-                    <i class="ti ti-trash"></i>
-                  </a>
-                </div>`
-              ),
-          },
-        ],
-        pagination: { limit: 10 },
-        sort: true,
-        search: true,
-        data: preciousListData,
-      });
-
-      // 用 GridJS 的 on('ready') 确保 DOM 渲染完，再初始化 Tooltips
-      grid.on("ready", () => {
-        // 销毁已有的 Tooltip（防止重复初始化）
-        const existingTooltips = bootstrap.Tooltip.getInstance(
-          document.querySelector('[data-bs-toggle="tooltip"]')
-        );
-        if (existingTooltips) existingTooltips.dispose?.();
-
-        // 初始化所有 Tooltip
-        const tooltipTriggerList = [].slice.call(
-          document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        );
-        tooltipTriggerList.forEach(function (el) {
-          new bootstrap.Tooltip(el);
-        });
-      });
-
-      // 最终渲染表格
-      grid.render(container);
+      renderPreciousList(data.data);
     });
+}
+
+function renderPreciousList(data) {
+  const preciousListData = data.map((item) => [
+    item.id,
+    item.itemid,
+    item.title,
+    item.tag,
+    item.price,
+    item.discount,
+    item.rating,
+    item.status,
+    item.url,
+    item.picurl,
+    item.id,
+  ]);
+
+  const container = document.getElementById("table-gridjs");
+  container.innerHTML = "";
+
+  const grid = new gridjs.Grid({
+    columns: [
+      { name: "ID", width: "50px" },
+      { name: "ItemID", width: "200px" },
+      { name: "Title", width: "250px" },
+      { name: "Tag", width: "120px" },
+      { name: "Price", width: "50px" },
+      { name: "Discount", width: "50px" },
+      { name: "Rating", width: "50px" },
+      {
+        name: "Status",
+        width: "100px",
+        formatter: (e) =>
+          gridjs.html(
+            e === 1
+              ? '<span class="badge bg-success fs-12 p-1">Active</span>'
+              : e === 0
+              ? '<span class="badge bg-primary fs-12 p-1">Sold</span>'
+              : e === 2
+              ? '<span class="badge bg-warning fs-12 p-1">Sale</span>'
+              : e === 3
+              ? '<span class="badge bg-danger fs-12 p-1">Unavailable</span>'
+              : '<span class="badge bg-secondary-subtle text-secondary fs-12 p-1">Unknown</span>'
+          ),
+      },
+      {
+        name: "Url",
+        width: "50px",
+        formatter: (e) =>
+          gridjs.html(
+            `<a class="link-reset fs-20 p-1 text-infjew"
+                data-bs-toggle="tooltip" 
+                data-bs-trigger="hover" 
+                data-bs-title="${e}">
+                <i class="ti ti-link"></i></a>`
+          ),
+      },
+      {
+        name: "PicUrl",
+        width: "50px",
+        formatter: (e) =>
+          gridjs.html(
+            `<a class="link-reset fs-20 p-1 text-info"
+                data-bs-toggle="tooltip" 
+                data-bs-trigger="hover" 
+                data-bs-title="${e}">
+                <i class="ti ti-link"></i></a>`
+          ),
+      },
+      {
+        name: "Action",
+        width: "100px",
+        formatter: (e) =>
+          gridjs.html(
+            `<div class="hstack gap-2">
+              <a data-bs-toggle="modal" data-bs-target="#EditPreciousModal" 
+                 data-id="${e}" 
+                 class="btn btn-soft-success btn-icon btn-sm rounded-circle table-edit-precious-btn">
+                <i class="ti ti-edit fs-16"></i>
+              </a>
+              <a href="javascript:void(0);" 
+                 class="btn btn-soft-danger btn-icon btn-sm rounded-circle sweet-delete-btn" 
+                 data-id="${e}">
+                <i class="ti ti-trash"></i>
+              </a>
+            </div>`
+          ),
+      },
+    ],
+    pagination: { limit: 10 },
+    sort: true,
+    search: true,
+    data: preciousListData,
+  });
+
+  grid.on("ready", () => {
+    const existingTooltips = bootstrap.Tooltip.getInstance(
+      document.querySelector('[data-bs-toggle="tooltip"]')
+    );
+    if (existingTooltips) existingTooltips.dispose?.();
+
+    const tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    tooltipTriggerList.forEach(function (el) {
+      new bootstrap.Tooltip(el);
+    });
+  });
+
+  grid.render(container);
 }
 
 function addEventListenerAfterDOMLoaded() {
@@ -308,4 +307,61 @@ function addEventListenerAfterDOMLoaded() {
     .addEventListener("click", function () {
       getEditPreciousForm();
     });
+
+  document.addEventListener("click", function (e) {
+    const deleteBtn = e.target.closest(".sweet-delete-btn");
+    if (!deleteBtn) return;
+
+    const id = parseInt(deleteBtn.dataset.id);
+
+    Swal.fire({
+      title: "你确定吗？",
+      text: "此操作将永久删除该条数据！",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "确认删除",
+      cancelButtonText: "取消",
+      customClass: {
+        confirmButton: "swal2-confirm btn btn-danger",
+        cancelButton: "btn btn-secondary ms-2",
+      },
+      buttonsStyling: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch("https://www.infjew.com/api/preciouslist/delete", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: id }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              Swal.fire({
+                title: "✅ 删除成功",
+                icon: "success",
+                timer: 1000,
+                showConfirmButton: false,
+              });
+
+              renderPreciousList(data.data); // 重新渲染
+            } else {
+              Swal.fire({
+                title: "❌ 删除失败",
+                text: data.message || "服务器返回错误",
+                icon: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.error("❌ 删除异常：", err);
+            Swal.fire({
+              title: "网络错误",
+              text: "删除失败，请检查网络连接",
+              icon: "error",
+            });
+          });
+      }
+    });
+  });
 }
