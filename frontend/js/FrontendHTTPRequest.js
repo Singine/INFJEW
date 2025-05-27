@@ -134,3 +134,5 @@ function GetCountingDown() {
       console.error("获取倒计时数据失败:", err);
     });
 }
+
+function GetPreciousList() {}
