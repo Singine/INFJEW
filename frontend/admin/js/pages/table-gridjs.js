@@ -1,4 +1,4 @@
-fetch("/api/preciouslist", {
+fetch("https://www.infjew.com/api/preciouslist", {
   method: "GET",
   credentials: "include", // 确保带上 cookie
 })
