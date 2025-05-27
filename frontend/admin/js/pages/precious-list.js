@@ -124,7 +124,7 @@ function fetchAndRenderPreciousList() {
         item.id, // 用于 Action 按钮（传 ID）
       ]);
 
-      new gridjs.Grid({
+      const grid = new gridjs.Grid({
         columns: [
           {
             name: "ID",
@@ -132,10 +132,7 @@ function fetchAndRenderPreciousList() {
             formatter: (e) =>
               gridjs.html('<span class="fw-semibold">' + e + "</span>"),
           },
-          {
-            name: "ItemID",
-            width: "200px",
-          },
+          { name: "ItemID", width: "200px" },
           { name: "Title", width: "250px" },
           { name: "Tag", width: "120px" },
           { name: "Price", width: "50px" },
@@ -201,17 +198,20 @@ function fetchAndRenderPreciousList() {
         sort: true,
         search: true,
         data: preciousListData,
-      })
-        .render(document.getElementById("table-gridjs"))
-        .then(() => {
-          // 激活 tooltip
-          const tooltipTriggerList = [].slice.call(
-            document.querySelectorAll('[data-bs-toggle="tooltip"]')
-          );
-          tooltipTriggerList.forEach(function (el) {
-            new bootstrap.Tooltip(el);
-          });
+      });
+
+      // 渲染 grid
+      grid.render(document.getElementById("table-gridjs"));
+
+      // 确保 tooltip 初始化在 DOM 渲染完成之后
+      grid.on("ready", () => {
+        const tooltipTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        tooltipTriggerList.forEach(function (el) {
+          new bootstrap.Tooltip(el);
         });
+      });
     });
 }
 
