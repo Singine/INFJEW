@@ -86,7 +86,7 @@ document.getElementById("table-gridjs").addEventListener("click", function (e) {
   const editBtn = e.target.closest(".table-edit-precious-btn");
 
   if (editBtn) {
-    const result = preciousList.find((row) =>
+    const result = preciousListData.find((row) =>
       row.includes(editBtn.getAttribute("data-id"))
     );
 
