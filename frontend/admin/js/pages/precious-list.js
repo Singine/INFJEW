@@ -289,7 +289,10 @@ function addEventListenerAfterDOMLoaded() {
         title: preciousData.title,
         price: parseInt(preciousData.price), // 将 price 转换为整数
         status: statusMapping[preciousData.status] || 3, // 如果 status 不匹配则默认为 'Unavailable' (3)
-        discount: preciousData.discount,
+        discount:
+          preciousData.discount == 0 && statusMapping[preciousData.status] != 2
+            ? parseInt(preciousData.price) // 如果 discount 为 0 且 status 不是 'Sale'，则将 discount 设置为 price
+            : preciousData.discount, // 否则使用原本的 discount
         tag: preciousData.tag,
         rating: preciousData.rating,
         url: preciousData.url,
