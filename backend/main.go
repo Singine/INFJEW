@@ -37,7 +37,6 @@ func main() {
 	mux.Handle("/api/preciouslist/update", ApplyMiddlewares(http.HandlerFunc(handlers.UpdatePreciousItemHandler), middleware.WithSessionRefresh, middleware.WithCORS))
 
 
-
 	mux.Handle("/api/countingdown/update", ApplyMiddlewares(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusOK)
@@ -49,6 +48,14 @@ func main() {
 	// 登录 / 登出接口只加 CORS，不自动续期
 	mux.Handle("/api/AuthLogin", ApplyMiddlewares(http.HandlerFunc(handlers.AuthLoginHandler), middleware.WithCORS))
 	mux.Handle("/api/AuthLogout", ApplyMiddlewares(http.HandlerFunc(handlers.AuthLogoutHandler), middleware.WithCORS))
+
+
+
+
+	// 以下是前端用api
+
+	mux.Handle("/api/public/banners", ApplyMiddlewares(http.HandlerFunc(handlers.PublicGetBannersHandler), middleware.WithCORS))
+
 
 	fmt.Println("服务器启动中，监听端口 8080...")
 	if err := http.ListenAndServe(":8080", mux); err != nil {

@@ -204,3 +204,60 @@ func CreateBannerHandler(w http.ResponseWriter, r *http.Request) {
 		"data":    banners,
 	})
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -----------以下给前端用api-----------------------
+
+// 公共获取 Banner 接口：无需登录
+func PublicGetBannersHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "Method Not Allowed",
+		})
+		return
+	}
+
+	rows, err := db.DB.Query("SELECT id, title1, title2, subtitle, url, picurl FROM banner")
+	if err != nil {
+		log.Printf("❌ 公共接口：数据库查询失败: %v", err)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "数据库查询失败",
+		})
+		return
+	}
+	defer rows.Close()
+
+	var banners []Banner
+	for rows.Next() {
+		var banner Banner
+		if err := rows.Scan(&banner.ID, &banner.Title1, &banner.Title2, &banner.Subtitle, &banner.URL, &banner.PicURL); err != nil {
+			log.Printf("❌ 公共接口：扫描数据失败: %v", err)
+			json.NewEncoder(w).Encode(map[string]interface{}{
+				"success": false,
+				"message": "数据处理失败",
+			})
+			return
+		}
+		banners = append(banners, banner)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"success": true,
+		"data":    banners,
+	})
+}
