@@ -256,6 +256,7 @@ function addEventListenerAfterDOMLoaded() {
           .value.trim(),
       };
 
+      console.log("status：", preciousData.status);
       const statusMapping = {
         Sold: 0,
         Active: 1,
@@ -277,6 +278,12 @@ function addEventListenerAfterDOMLoaded() {
         url: preciousData.url,
         picurl: preciousData.picurl,
       };
+
+      console.log(
+        "dataToSend status：",
+        statusMapping[preciousData.status],
+        dataToSend.status
+      );
 
       AddPreciousList(dataToSend);
     });
@@ -453,7 +460,7 @@ function UpdatePreciousList(e) {
     .then((result) => {
       if (result.success) {
         console.log("更新成功", result);
-        location.reload(); // 重新加载页面以更新数据
+        // location.reload(); // 重新加载页面以更新数据
       } else {
         console.error("更新失败", result.message);
       }
