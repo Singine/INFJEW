@@ -19,7 +19,7 @@ function GetBanner() {
       if (carousel.hasClass("owl-loaded")) {
         carousel.trigger("destroy.owl.carousel");
         carousel.html(""); // 清空 DOM
-        carousel.removeClass("owl-loaded owl-carousel owl-hidden"); // 干净移除 class
+        carousel.removeClass("owl-loaded owl-hidden"); // 干净移除 class
       }
 
       // ✅ 2. 动态添加每一个 slide
