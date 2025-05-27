@@ -403,7 +403,7 @@ function formatPreciousListData(data) {
 
 function AddPreciousList(e) {
   // 发送 POST 请求到新增 Precious Item API
-  fetch("/api/preciouslist/create", {
+  fetch("https://www.infjew.com/api/preciouslist/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
