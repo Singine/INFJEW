@@ -15,27 +15,18 @@ function fillEditForm(result) {
   document.getElementById("edit-precious-title").value = result[1];
   document.getElementById("edit-precious-price").value = result[3];
 
-  // 根据 status 设置 radio
-  const statusMap = {
-    Sold: "edit-statusRadio0",
-    Active: "edit-statusRadio1",
-    Sale: "edit-statusRadio2",
-    Unavailable: "edit-statusRadio3",
-  };
-
-  const statusRadioId = statusMap[result[6]];
-  if (statusRadioId) {
-    const radio = document.getElementById(statusRadioId);
-
-    if (radio) {
-      radio.checked = true;
-      radio.setAttribute("checked", "checked");
-    }
+  // 根据 status（0-3）设置对应 radio
+  const statusRadioId = `edit-statusRadio${result[6]}`;
+  const radio = document.getElementById(statusRadioId);
+  if (radio) {
+    radio.checked = true;
+    radio.setAttribute("checked", "checked");
   }
 
   // 折扣逻辑
   const discountInput = document.getElementById("edit-precious-discount");
-  if (result[6] === "Sale") {
+  if (result[6] === 2) {
+    // status === 2 表示 Sale
     discountInput.disabled = false;
     discountInput.value = result[4] !== "-" ? result[4] : "";
   } else {
@@ -50,7 +41,7 @@ function fillEditForm(result) {
   // 设置 Ratings（默认为 5）
   const ratingSelect = document.getElementById("edit-rating-select");
   for (let i = 0; i < ratingSelect.options.length; i++) {
-    if (ratingSelect.options[i].value === result[5]) {
+    if (parseInt(ratingSelect.options[i].value) === result[5]) {
       ratingSelect.selectedIndex = i;
       break;
     }
