@@ -2,6 +2,7 @@ window.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded");
   GetBanner();
   GetCountingDown();
+  GetPreciousList();
 });
 
 function GetBanner() {
@@ -135,4 +136,122 @@ function GetCountingDown() {
     });
 }
 
-function GetPreciousList() {}
+function GetPreciousList() {
+  fetch("https://www.infjew.com/api/public/preciouslist")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        renderProducts(data.data);
+      } else {
+        console.error("数据获取失败");
+      }
+    })
+    .catch((error) => {
+      console.error("请求失败:", error);
+    });
+}
+
+function renderProducts(products) {
+  // 获取到展示区域
+  const allProductsContainer = document.querySelector("#all-products .row");
+  const stellunaProductsContainer =
+    document.querySelector("#top-stelluna .row");
+  const adornmentProductsContainer = document.querySelector(
+    "#top-adornment .row"
+  );
+
+  // 清空现有内容
+  allProductsContainer.innerHTML = "";
+  stellunaProductsContainer.innerHTML = "";
+  adornmentProductsContainer.innerHTML = "";
+
+  // 遍历产品数据，渲染到不同的区域
+  products.forEach((product) => {
+    const productCard = createProductCard(product);
+
+    // 根据标签(tag)决定插入位置
+    if (product.tag === "Stelluna") {
+      stellunaProductsContainer.appendChild(productCard);
+    } else if (product.tag === "Adornment") {
+      adornmentProductsContainer.appendChild(productCard);
+    }
+
+    // 不管标签如何，都插入到所有产品列表中
+    allProductsContainer.appendChild(productCard);
+  });
+}
+
+function createProductCard(product) {
+  const col = document.createElement("div");
+  col.classList.add("col-xl-3", "col-lg-4", "col-md-6", "col-12");
+
+  const card = document.createElement("div");
+  card.classList.add("top-product-wrapper", "jump-to-new");
+  card.dataset.jump = product.url;
+
+  const inner = document.createElement("div");
+  inner.classList.add(
+    "top-product-inner",
+    "d-flex",
+    "justify-content-center",
+    "align-items-center"
+  );
+
+  // 如果产品已售罄，显示"Sold out"
+  if (product.status === 0) {
+    const soldOut = document.createElement("div");
+    soldOut.classList.add("sold-out-inner");
+    soldOut.innerHTML = "<span>Sold out</span>";
+    inner.appendChild(soldOut);
+  }
+
+  const imageWrapper = document.createElement("div");
+  imageWrapper.classList.add("top-prod-thumb");
+  const image = document.createElement("img");
+  image.src = product.picurl;
+  image.alt = product.title;
+  imageWrapper.appendChild(image);
+  inner.appendChild(imageWrapper);
+
+  card.appendChild(inner);
+
+  const content = document.createElement("div");
+  content.classList.add("top-prod-content");
+
+  const title = document.createElement("h5");
+  title.classList.add("top-product-title");
+  title.innerHTML = product.title;
+  content.appendChild(title);
+
+  const rating = document.createElement("div");
+  rating.classList.add("product-rating");
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement("i");
+    star.classList.add("las", "la-star");
+    if (i >= product.rating) {
+      star.classList.add("inactive");
+    }
+    rating.appendChild(star);
+  }
+  content.appendChild(rating);
+
+  const price = document.createElement("div");
+  price.classList.add("product-price");
+  const priceText = document.createElement("p");
+  if (product.discount < product.price) {
+    const originalPrice = document.createElement("span");
+    originalPrice.innerHTML = `$${product.price.toFixed(2)}`;
+    originalPrice.classList.add("original-price");
+    priceText.innerHTML = `$${product.discount.toFixed(2)} `;
+    priceText.appendChild(originalPrice);
+  } else {
+    priceText.innerHTML = `$${product.discount.toFixed(2)}`;
+  }
+  price.appendChild(priceText);
+  content.appendChild(price);
+
+  card.appendChild(content);
+  col.appendChild(card);
+
+  return col;
+}
