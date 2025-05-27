@@ -8,15 +8,16 @@ window.addEventListener("DOMContentLoaded", function () {
 
 function fillEditForm(result) {
   // 确保 result 有足够的字段
-  if (!result || result.length < 7) return;
+  if (!result || result.length < 8) return;
 
   // 填写对应字段
   document.getElementById("edit-precious-id").value = result[0];
-  document.getElementById("edit-precious-title").value = result[1];
-  document.getElementById("edit-precious-price").value = result[3];
+  document.getElementById("edit-precious-itemid").value = result[1];
+  document.getElementById("edit-precious-title").value = result[2];
+  document.getElementById("edit-precious-price").value = result[4];
 
   // 根据 status（0-3）设置对应 radio
-  const statusRadioId = `edit-statusRadio${result[6]}`;
+  const statusRadioId = `edit-statusRadio${result[7]}`;
   const radio = document.getElementById(statusRadioId);
   if (radio) {
     radio.checked = true;
@@ -25,10 +26,10 @@ function fillEditForm(result) {
 
   // 折扣逻辑
   const discountInput = document.getElementById("edit-precious-discount");
-  if (result[6] === 2) {
+  if (result[7] === 2) {
     // status === 2 表示 Sale
     discountInput.disabled = false;
-    discountInput.value = result[4] !== "-" ? result[4] : "";
+    discountInput.value = result[5] !== "-" ? result[5] : "";
   } else {
     discountInput.disabled = true;
     discountInput.value = "";
@@ -36,23 +37,23 @@ function fillEditForm(result) {
 
   // 设置 Tag（如果有对应项）
   const tagSelect = document.getElementById("edit-precious-tag");
-  tagSelect.value = result[2]; // 假设 result[2] 是 "Stelluna" 或 "Adornment"
+  tagSelect.value = result[3]; // 假设 result[2] 是 "Stelluna" 或 "Adornment"
 
   // 设置 Ratings（默认为 5）
   const ratingSelect = document.getElementById("edit-rating-select");
   for (let i = 0; i < ratingSelect.options.length; i++) {
-    if (parseInt(ratingSelect.options[i].value) === result[5]) {
+    if (parseInt(ratingSelect.options[i].value) === result[6]) {
       ratingSelect.selectedIndex = i;
       break;
     }
   }
 
-  document.getElementById("edit-precious-url").value = result[7];
+  document.getElementById("edit-precious-url").value = result[8];
 
   // 模拟图片地址为 PreciousId（你可以换成实际字段）
   document.getElementById(
     "edit-precious-picture-url"
-  ).value = `https://yourcdn.com/images/${result[0]}.jpg`;
+  ).value = `https://yourcdn.com/images/${result[1]}.jpg`;
 }
 
 function clearPreciousForm() {
@@ -113,6 +114,7 @@ function fetchAndRenderPreciousList() {
       }
 
       preciousListData = data.data.map((item) => [
+        item.id,
         item.itemid,
         item.title,
         item.tag,
@@ -121,6 +123,7 @@ function fetchAndRenderPreciousList() {
         item.rating,
         item.status,
         item.url,
+        item.picurl,
         item.id, // 用于 Action 按钮（传 ID）
       ]);
 
@@ -128,9 +131,13 @@ function fetchAndRenderPreciousList() {
         columns: [
           {
             name: "ID",
-            width: "200px",
+            width: "50px",
             formatter: (e) =>
               gridjs.html('<span class="fw-semibold">' + e + "</span>"),
+          },
+          {
+            name: "ItemID",
+            width: "200px",
           },
           { name: "Title", width: "250px" },
           { name: "Tag", width: "120px" },
@@ -162,6 +169,18 @@ function fetchAndRenderPreciousList() {
                   ? '<a href="' +
                       e +
                       '" class="link-reset fs-20 p-1 text-infjew" target="_blank"><i class="ti ti-link"></i></a>'
+                  : '<a href="javascript:void(0);" class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
+              ),
+          },
+          {
+            name: "PicUrl",
+            width: "50px",
+            formatter: (e) =>
+              gridjs.html(
+                e !== ""
+                  ? '<a href="' +
+                      e +
+                      '" class="link-reset fs-20 p-1 text-info" target="_blank"><i class="ti ti-link"></i></a>'
                   : '<a href="javascript:void(0);" class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
               ),
           },
