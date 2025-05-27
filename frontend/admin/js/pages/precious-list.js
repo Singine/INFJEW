@@ -339,7 +339,7 @@ function addEventListenerAfterDOMLoaded() {
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
       customClass: {
-        confirmButton: "swal2-confirm btn btn-infjew",
+        confirmButton: "swal2-confirm btn btn-primary",
         cancelButton: "btn btn-warning ms-2",
       },
       buttonsStyling: false,
@@ -361,7 +361,7 @@ function addEventListenerAfterDOMLoaded() {
                 showConfirmButton: false,
               });
 
-              reRenderPreciousList(data.data); // 重新渲染
+              fetchAndRenderPreciousList(); // 重新渲染
             } else {
               Swal.fire({
                 title: "❌ 删除失败",
