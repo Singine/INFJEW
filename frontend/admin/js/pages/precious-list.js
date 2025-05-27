@@ -115,7 +115,7 @@ function fetchAndRenderPreciousList() {
 }
 
 function renderPreciousList(data) {
-  const preciousListData = data.map((item) => [
+  preciousListData = data.map((item) => [
     item.id,
     item.itemid,
     item.title,
