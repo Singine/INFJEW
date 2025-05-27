@@ -587,12 +587,6 @@
     $(this).addClass("active");
   });
 
-  $(".jump-to-new").on("click", function () {
-    if (!$(this).hasClass("sold-out-active")) {
-      window.open($(this).attr("data-jump"));
-    }
-  });
-
   $(".jump-to-recent").on("click", function () {
     window.location.href = $(this).attr("data-jump");
   });
