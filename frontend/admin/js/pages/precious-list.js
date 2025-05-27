@@ -1,5 +1,4 @@
 window.preciousListData = [];
-window.preciousGrid = null;
 
 window.addEventListener("DOMContentLoaded", function () {
   fetchAndRenderPreciousList().then(() => {
@@ -121,14 +120,11 @@ function fetchAndRenderPreciousList() {
 }
 
 function renderPreciousList(data) {
-  const container = document.getElementById("table-gridjs");
+  
+  document.getElementById("table-gridjs") = "";
 
-  if (preciousGrid) {
-    container.innerHTML = "";
-    preciousGrid = null;
-  }
 
-  preciousGrid = new gridjs.Grid({
+  const preciousGrid = new gridjs.Grid({
     columns: [
       { name: "ID", width: "50px" },
       { name: "ItemID", width: "200px" },
