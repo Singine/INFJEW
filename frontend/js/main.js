@@ -72,52 +72,52 @@
     });
   }
 
-  // Hero Area Carousel
-  $(".hero-area-slider").owlCarousel({
-    items: 1,
-    margin: 30,
-    dots: true,
-    nav: false,
-    loop: true,
-    autoplay: false,
-    responsiveClass: true,
-  });
+  // // Hero Area Carousel
+  // $(".hero-area-slider").owlCarousel({
+  //   items: 1,
+  //   margin: 30,
+  //   dots: true,
+  //   nav: false,
+  //   loop: true,
+  //   autoplay: false,
+  //   responsiveClass: true,
+  // });
 
-  // Hero Area Slider
+  // // Hero Area Slider
 
-  $(".homepage-slides").owlCarousel({
-    items: 1,
-    dots: false,
-    nav: true,
-    loop: true,
-    autoplay: false,
-    autoplayTimeout: 5000,
-    animateIn: "fadeIn",
-    smartSpeed: 2000,
-    slideSpeed: 600,
-    navText: [
-      "<i class='las la-arrow-left'></i>",
-      "<i class='las la-arrow-right'></i>",
-    ],
-    responsive: {
-      0: {
-        items: 1,
-        nav: false,
-        dots: false,
-      },
-      600: {
-        items: 1,
-        nav: false,
-        dots: false,
-      },
-      768: {
-        items: 1,
-      },
-      1100: {
-        items: 1,
-      },
-    },
-  });
+  // $(".homepage-slides").owlCarousel({
+  //   items: 1,
+  //   dots: false,
+  //   nav: true,
+  //   loop: true,
+  //   autoplay: false,
+  //   autoplayTimeout: 5000,
+  //   animateIn: "fadeIn",
+  //   smartSpeed: 2000,
+  //   slideSpeed: 600,
+  //   navText: [
+  //     "<i class='las la-arrow-left'></i>",
+  //     "<i class='las la-arrow-right'></i>",
+  //   ],
+  //   responsive: {
+  //     0: {
+  //       items: 1,
+  //       nav: false,
+  //       dots: false,
+  //     },
+  //     600: {
+  //       items: 1,
+  //       nav: false,
+  //       dots: false,
+  //     },
+  //     768: {
+  //       items: 1,
+  //     },
+  //     1100: {
+  //       items: 1,
+  //     },
+  //   },
+  // });
 
   // Testimonial Carousel
   $(".testimonial-carousel").owlCarousel({
@@ -185,93 +185,6 @@
       },
       1200: {
         items: 2,
-        dots: true,
-        loop: true,
-      },
-    },
-  });
-
-  $(".instragram-inner").owlCarousel({
-    items: 1,
-    dots: true,
-    nav: false,
-    loop: true,
-    autoplay: true,
-    responsiveClass: true,
-    responsive: {
-      0: {
-        items: 2,
-        nav: false,
-        dots: false,
-      },
-
-      530: {
-        items: 3,
-        nav: false,
-        dots: false,
-      },
-
-      767: {
-        items: 3,
-        nav: false,
-        dots: false,
-      },
-
-      930: {
-        items: 4,
-        loop: true,
-      },
-
-      1100: {
-        items: 4,
-        loop: true,
-      },
-      1200: {
-        items: 5,
-        dots: true,
-        loop: true,
-      },
-    },
-  });
-
-  $(".instragram-inner-two").owlCarousel({
-    items: 6,
-    margin: 20,
-    dots: true,
-    nav: false,
-    loop: true,
-    autoplay: true,
-    responsiveClass: true,
-    responsive: {
-      0: {
-        items: 2,
-        nav: false,
-        dots: false,
-      },
-
-      530: {
-        items: 3,
-        nav: false,
-        dots: false,
-      },
-
-      767: {
-        items: 3,
-        nav: false,
-        dots: false,
-      },
-
-      930: {
-        items: 4,
-        loop: true,
-      },
-
-      1100: {
-        items: 4,
-        loop: true,
-      },
-      1200: {
-        items: 6,
         dots: true,
         loop: true,
       },
@@ -471,15 +384,6 @@
       filter: selector,
       percentPosition: true,
     });
-  });
-
-  // Cart Button
-  $(".cart_btn").on("click", function () {
-    $(".mini_cart_wrap, .offcanvas-overlay").addClass("active");
-    return false;
-  });
-  $(".menu-close,.offcanvas-overlay").on("click", function () {
-    $(".mini_cart_wrap, .offcanvas-overlay").removeClass("active");
   });
 
   //  jQuery Sticky Area
@@ -716,17 +620,5 @@
           console.error("获取 IP 失败", error);
         });
     }
-
-    // $.ajax({
-    // 	type: "POST",
-    // 	url: "https://example.com/api/contact",
-    // 	data: message,
-    // 	success: function (response) {
-    // 		alert("Message sent successfully!");
-    // 	},
-    // 	error: function (error) {
-    // 		alert("Error sending message.");
-    // 	}
-    // });
   });
 })(window.jQuery);

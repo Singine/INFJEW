@@ -1,4 +1,5 @@
 window.addEventListener("DOMContentLoaded", function () {
+  console.log("DOMContentLoaded");
   GetBanner();
 });
 
@@ -10,15 +11,15 @@ function GetBanner() {
         console.error("获取 banner 失败:", data.message);
         return;
       }
-
-      const $carousel = $(".hero-area-slider");
-      console.log("$carousel", $carousel);
+      console.log("data", data);
+      const carousel = $(".hero-area-slider");
+      console.log("$carousel", carousel);
 
       // ✅ 1. 销毁旧的 owlCarousel（如果已经初始化）
-      if ($carousel.hasClass("owl-loaded")) {
-        $carousel.trigger("destroy.owl.carousel");
-        $carousel.html(""); // 清空 DOM
-        $carousel.removeClass("owl-loaded owl-carousel owl-hidden"); // 干净移除 class
+      if (carousel.hasClass("owl-loaded")) {
+        carousel.trigger("destroy.owl.carousel");
+        carousel.html(""); // 清空 DOM
+        carousel.removeClass("owl-loaded owl-carousel owl-hidden"); // 干净移除 class
       }
 
       // ✅ 2. 动态添加每一个 slide
@@ -46,11 +47,11 @@ function GetBanner() {
           </div>
         </div>
       `;
-        $carousel.append(slideHtml);
+        carousel.append(slideHtml);
       });
 
       // ✅ 3. 重新初始化 Owl Carousel
-      $carousel.owlCarousel({
+      carousel.owlCarousel({
         items: 1,
         loop: true,
         autoplay: true,
