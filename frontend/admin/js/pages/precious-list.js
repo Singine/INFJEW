@@ -111,7 +111,7 @@ function fetchAndRenderPreciousList() {
         return;
       }
 
-      renderPreciousList(data.data);
+      reRenderPreciousList(data.data);
     });
 }
 
@@ -224,6 +224,21 @@ function renderPreciousList(data) {
   });
 
   window.preciousGrid.render(container);
+}
+
+function reRenderPreciousList(data) {
+  const container = document.getElementById("table-gridjs");
+
+  // 添加淡出动画
+  container.classList.remove("fade-in");
+  container.classList.add("fade-out");
+
+  // 等待动画结束后重新渲染
+  setTimeout(() => {
+    renderPreciousList(data); // 原来的渲染逻辑
+    container.classList.remove("fade-out");
+    container.classList.add("fade-in");
+  }, 300); // 和 CSS transition 时间一致
 }
 
 function addEventListenerAfterDOMLoaded() {
@@ -340,13 +355,13 @@ function addEventListenerAfterDOMLoaded() {
           .then((data) => {
             if (data.success) {
               Swal.fire({
-                title: "✅ 删除成功",
-                icon: "success",
+                title: "Deleted!",
+                icon: "danger",
                 timer: 1000,
                 showConfirmButton: false,
               });
 
-              renderPreciousList(data.data); // 重新渲染
+              reRenderPreciousList(data.data); // 重新渲染
             } else {
               Swal.fire({
                 title: "❌ 删除失败",
