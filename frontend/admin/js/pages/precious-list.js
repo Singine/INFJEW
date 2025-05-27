@@ -333,7 +333,7 @@ function addEventListenerAfterDOMLoaded() {
       };
 
       const dataToSend = {
-        id: editPreciousData.id, // 保留原有的 id，用于更新操作
+        id: parseInt(editPreciousData.id), // 保留原有的 id，用于更新操作
         itemid: editPreciousData.itemid,
         title: editPreciousData.title,
         price: parseInt(editPreciousData.price), // 将 price 转换为整数
