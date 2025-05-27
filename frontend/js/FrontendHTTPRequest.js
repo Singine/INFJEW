@@ -3,6 +3,24 @@ window.addEventListener("DOMContentLoaded", function () {
   GetBanner();
   GetCountingDown();
   GetPreciousList();
+
+  document.body.addEventListener("click", function (event) {
+    // 检查点击的元素是否是 .jump-to-new
+    if (event.target.closest(".jump-to-new")) {
+      const clickedElement = event.target.closest(".jump-to-new");
+
+      // 判断是否有 "sold-out-active" 类
+      if (!clickedElement.classList.contains("sold-out-active")) {
+        // 获取 data-jump 属性的值
+        const jumpUrl = clickedElement.dataset.jump;
+
+        // 如果 url 存在，则打开新页面
+        if (jumpUrl) {
+          window.open(jumpUrl, "_blank");
+        }
+      }
+    }
+  });
 });
 
 function GetBanner() {
