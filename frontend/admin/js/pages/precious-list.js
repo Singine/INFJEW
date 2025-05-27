@@ -111,34 +111,23 @@ function fetchAndRenderPreciousList() {
         return;
       }
 
+      // ✅ 更新全局变量
+      window.preciousListData = formatPreciousListData(data.data);
       reRenderPreciousList(data.data);
     });
 }
 
 function renderPreciousList(data) {
-  preciousListData = data.map((item) => [
-    item.id,
-    item.itemid,
-    item.title,
-    item.tag,
-    item.price,
-    item.discount,
-    item.rating,
-    item.status,
-    item.url,
-    item.picurl,
-    item.id,
-  ]);
+  // ✅ 用格式化后的数据更新全局数据
+  window.preciousListData = formatPreciousListData(data);
 
   const container = document.getElementById("table-gridjs");
 
-  // 清空旧 GridJS 实例
   if (window.preciousGrid) {
     container.innerHTML = "";
     window.preciousGrid = null;
   }
 
-  // 重新生成 Grid 实例
   window.preciousGrid = new gridjs.Grid({
     columns: [
       { name: "ID", width: "50px" },
@@ -211,7 +200,7 @@ function renderPreciousList(data) {
     pagination: { limit: 10 },
     sort: true,
     search: true,
-    data: preciousListData,
+    data: window.preciousListData,
   });
 
   window.preciousGrid.on("ready", () => {
@@ -224,6 +213,19 @@ function renderPreciousList(data) {
   });
 
   window.preciousGrid.render(container);
+}
+
+function reRenderPreciousList(data) {
+  const container = document.getElementById("table-gridjs");
+
+  container.classList.remove("fade-in");
+  container.classList.add("fade-out");
+
+  setTimeout(() => {
+    renderPreciousList(data); // 原来的渲染逻辑
+    container.classList.remove("fade-out");
+    container.classList.add("fade-in");
+  }, 300); // 和 CSS transition 时间一致
 }
 
 function reRenderPreciousList(data) {
@@ -356,7 +358,7 @@ function addEventListenerAfterDOMLoaded() {
             if (data.success) {
               Swal.fire({
                 title: "Deleted!",
-                icon: "danger",
+                icon: "info",
                 timer: 1000,
                 showConfirmButton: false,
               });
@@ -381,4 +383,20 @@ function addEventListenerAfterDOMLoaded() {
       }
     });
   });
+}
+
+function formatPreciousListData(data) {
+  return data.map((item) => [
+    item.id,
+    item.itemid,
+    item.title,
+    item.tag,
+    item.price,
+    item.discount,
+    item.rating,
+    item.status,
+    item.url,
+    item.picurl,
+    item.id,
+  ]);
 }
