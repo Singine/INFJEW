@@ -201,15 +201,17 @@ function fetchAndRenderPreciousList() {
         sort: true,
         search: true,
         data: preciousListData,
-      }).render(document.getElementById("table-gridjs"));
-
-      // 激活 tooltip
-      const tooltipTriggerList = [].slice.call(
-        document.querySelectorAll('[data-bs-toggle="tooltip"]')
-      );
-      tooltipTriggerList.forEach(function (el) {
-        new bootstrap.Tooltip(el);
-      });
+      })
+        .render(document.getElementById("table-gridjs"))
+        .then(() => {
+          // 激活 tooltip
+          const tooltipTriggerList = [].slice.call(
+            document.querySelectorAll('[data-bs-toggle="tooltip"]')
+          );
+          tooltipTriggerList.forEach(function (el) {
+            new bootstrap.Tooltip(el);
+          });
+        });
     });
 }
 
