@@ -225,22 +225,7 @@ function reRenderPreciousList(data) {
     renderPreciousList(data); // 原来的渲染逻辑
     container.classList.remove("fade-out");
     container.classList.add("fade-in");
-  }, 300); // 和 CSS transition 时间一致
-}
-
-function reRenderPreciousList(data) {
-  const container = document.getElementById("table-gridjs");
-
-  // 添加淡出动画
-  container.classList.remove("fade-in");
-  container.classList.add("fade-out");
-
-  // 等待动画结束后重新渲染
-  setTimeout(() => {
-    renderPreciousList(data); // 原来的渲染逻辑
-    container.classList.remove("fade-out");
-    container.classList.add("fade-in");
-  }, 300); // 和 CSS transition 时间一致
+  }, 1000); // 和 CSS transition 时间一致
 }
 
 function addEventListenerAfterDOMLoaded() {
