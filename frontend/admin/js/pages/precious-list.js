@@ -163,10 +163,10 @@ function fetchAndRenderPreciousList() {
             formatter: (e) =>
               gridjs.html(
                 e !== ""
-                  ? '<a href="' +
+                  ? '<a class="link-reset fs-20 p-1 text-infjew" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="' +
                       e +
-                      '" class="link-reset fs-20 p-1 text-infjew" target="_blank"><i class="ti ti-link"></i></a>'
-                  : '<a href="javascript:void(0);" class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
+                      '"><i class="ti ti-link"></i></a>'
+                  : '<a class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
               ),
           },
           {
@@ -175,10 +175,10 @@ function fetchAndRenderPreciousList() {
             formatter: (e) =>
               gridjs.html(
                 e !== ""
-                  ? '<a href="' +
+                  ? '<a class="link-reset fs-20 p-1 text-info" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="' +
                       e +
-                      '" class="link-reset fs-20 p-1 text-info" target="_blank"><i class="ti ti-link"></i></a>'
-                  : '<a href="javascript:void(0);" class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
+                      '"><i class="ti ti-link"></i></a>'
+                  : '<a class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
               ),
           },
           {
