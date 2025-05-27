@@ -1,4 +1,5 @@
 window.preciousListData = [];
+window.preciousGrid = null;
 
 window.addEventListener("DOMContentLoaded", function () {
   fetchAndRenderPreciousList().then(() => {
@@ -130,9 +131,15 @@ function renderPreciousList(data) {
   ]);
 
   const container = document.getElementById("table-gridjs");
-  container.innerHTML = "";
 
-  const grid = new gridjs.Grid({
+  // 清空旧 GridJS 实例
+  if (window.preciousGrid) {
+    container.innerHTML = "";
+    window.preciousGrid = null;
+  }
+
+  // 重新生成 Grid 实例
+  window.preciousGrid = new gridjs.Grid({
     columns: [
       { name: "ID", width: "50px" },
       { name: "ItemID", width: "200px" },
@@ -207,12 +214,7 @@ function renderPreciousList(data) {
     data: preciousListData,
   });
 
-  grid.on("ready", () => {
-    const existingTooltips = bootstrap.Tooltip.getInstance(
-      document.querySelector('[data-bs-toggle="tooltip"]')
-    );
-    if (existingTooltips) existingTooltips.dispose?.();
-
+  window.preciousGrid.on("ready", () => {
     const tooltipTriggerList = [].slice.call(
       document.querySelectorAll('[data-bs-toggle="tooltip"]')
     );
@@ -221,7 +223,7 @@ function renderPreciousList(data) {
     });
   });
 
-  grid.render(container);
+  window.preciousGrid.render(container);
 }
 
 function addEventListenerAfterDOMLoaded() {
@@ -322,8 +324,8 @@ function addEventListenerAfterDOMLoaded() {
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
       customClass: {
-        confirmButton: "swal2-confirm btn btn-,infjew",
-        cancelButton: "btn btn-primary ms-2",
+        confirmButton: "swal2-confirm btn btn-infjew",
+        cancelButton: "btn btn-warning ms-2",
       },
       buttonsStyling: false,
     }).then((result) => {
