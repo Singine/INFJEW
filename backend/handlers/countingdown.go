@@ -139,7 +139,7 @@ func PublicGetCountingDownHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rows, err := db.DB.Query(`SELECT id, title, price, discount, percentage, rating, ddl, url, picurl FROM countingdown`)
+	rows, err := db.DB.Query(`SELECT id, title, price, discount, percentage, rating, ddl, url, picurl FROM countingDown`)
 	if err != nil {
 		log.Printf("❌ 查询 countingdown 数据失败: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -150,6 +150,8 @@ func PublicGetCountingDownHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer rows.Close()
+
+	
 
 	var items []CountingDown
 	for rows.Next() {
