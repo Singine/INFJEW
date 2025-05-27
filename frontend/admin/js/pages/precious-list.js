@@ -267,7 +267,7 @@ function addEventListenerAfterDOMLoaded() {
         itemid: preciousData.id,
         title: preciousData.title,
         price: parseInt(preciousData.price), // 将 price 转换为整数
-        status: statusMapping[preciousData.status] || 3, // 如果 status 不匹配则默认为 'Unavailable' (3)
+        status: statusMapping[preciousData.status],
         discount:
           statusMapping[preciousData.status] === 2
             ? parseInt(preciousData.discount)
@@ -337,7 +337,7 @@ function addEventListenerAfterDOMLoaded() {
         itemid: editPreciousData.itemid,
         title: editPreciousData.title,
         price: parseInt(editPreciousData.price), // 将 price 转换为整数
-        status: statusMapping[editPreciousData.status] || 3, // 如果 status 不匹配则默认为 'Unavailable' (3)
+        status: statusMapping[editPreciousData.status],
         discount:
           statusMapping[editPreciousData.status] === 2
             ? parseInt(editPreciousData.discount)
@@ -347,13 +347,6 @@ function addEventListenerAfterDOMLoaded() {
         url: editPreciousData.url,
         picurl: editPreciousData.picurl,
       };
-
-      console.log("status：", editPreciousData.status);
-      console.log(
-        "dataToSend status：",
-        statusMapping[editPreciousData.status],
-        dataToSend.status
-      );
 
       UpdatePreciousList(dataToSend);
     });
@@ -460,7 +453,7 @@ function UpdatePreciousList(e) {
     .then((result) => {
       if (result.success) {
         console.log("更新成功", result);
-        // location.reload(); // 重新加载页面以更新数据
+        location.reload(); // 重新加载页面以更新数据
       } else {
         console.error("更新失败", result.message);
       }
