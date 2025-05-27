@@ -120,7 +120,7 @@ function fetchAndRenderPreciousList() {
     });
 }
 
-function renderPreciousList() {
+function renderPreciousList(data) {
   const container = document.getElementById("table-gridjs");
 
   if (window.preciousGrid) {
@@ -200,7 +200,7 @@ function renderPreciousList() {
     pagination: { limit: 10 },
     sort: true,
     search: true,
-    data: window.preciousListData,
+    data: data, // ✅ 关键点：使用传入的 data，而不是 window.preciousListData
   });
 
   window.preciousGrid.on("ready", () => {
