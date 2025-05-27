@@ -2546,6 +2546,7 @@ li.nav-item a.nav-link i {
 }
 
 .countdown-inner h4 {
+  font-family: "SmileySans", sans-serif;
   font-size: 25px;
   font-weight: 600;
   line-height: 30px;
