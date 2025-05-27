@@ -258,7 +258,7 @@ function addEventListenerAfterDOMLoaded() {
   document
     .getElementById("add-precious-btn")
     .addEventListener("click", function () {
-      const addPreciousData = {
+      const preciousData = {
         id: document.getElementById("add-precious-id").value.trim(),
         title: document.getElementById("add-precious-title").value.trim(),
         price: document.getElementById("add-precious-price").value.trim(),
@@ -271,13 +271,32 @@ function addEventListenerAfterDOMLoaded() {
           0,
         tag: document.getElementById("add-precious-tag").value,
         rating: parseInt(document.getElementById("add-rating-select").value),
-        Url: document.getElementById("add-precious-url").value.trim(),
-        pictureUrl: document
+        url: document.getElementById("add-precious-url").value.trim(),
+        picurl: document
           .getElementById("add-precious-picture-url")
           .value.trim(),
       };
 
-      console.log("提交的数据：", addPreciousData);
+      const statusMapping = {
+        Sold: 0,
+        Active: 1,
+        Sale: 2,
+        Unavailable: 3,
+      };
+
+      const dataToSend = {
+        itemid: preciousData.id,
+        title: preciousData.title,
+        price: parseInt(preciousData.price), // 将 price 转换为整数
+        status: statusMapping[preciousData.status] || 3, // 如果 status 不匹配则默认为 'Unavailable' (3)
+        discount: preciousData.discount,
+        tag: preciousData.tag,
+        rating: preciousData.rating,
+        url: preciousData.url,
+        picurl: preciousData.picurl,
+      };
+
+      AddPreciousList(dataToSend);
     });
 
   document
@@ -380,4 +399,27 @@ function formatPreciousListData(data) {
     item.picurl,
     item.id,
   ]);
+}
+
+function AddPreciousList(e) {
+  // 发送 POST 请求到新增 Precious Item API
+  fetch("/api/preciouslist/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(e),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success) {
+        console.log("新增成功", result);
+        location.reload(); // 重新加载页面以更新数据
+      } else {
+        console.error("新增失败", result.message);
+      }
+    })
+    .catch((error) => {
+      console.error("请求失败", error);
+    });
 }

@@ -33,6 +33,8 @@ func main() {
 	mux.Handle("/api/countingdown", ApplyMiddlewares(http.HandlerFunc(handlers.GetCountingDownHandler), middleware.WithSessionRefresh, middleware.WithCORS))
 	mux.Handle("/api/preciouslist", ApplyMiddlewares(http.HandlerFunc(handlers.GetPreciousListHandler), middleware.WithSessionRefresh, middleware.WithCORS))
 	mux.Handle("/api/preciouslist/delete", ApplyMiddlewares(http.HandlerFunc(handlers.DeletePreciousItemHandler), middleware.WithSessionRefresh, middleware.WithCORS))
+	mux.Handle("/api/preciouslist/create", ApplyMiddlewares(http.HandlerFunc(handlers.CreatePreciousItemHandler), middleware.WithSessionRefresh, middleware.WithCORS))
+	mux.Handle("/api/preciouslist/update", ApplyMiddlewares(http.HandlerFunc(handlers.UpdatePreciousItemHandler), middleware.WithSessionRefresh, middleware.WithCORS))
 
 
 
