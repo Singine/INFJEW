@@ -111,16 +111,16 @@ function fetchAndRenderPreciousList() {
         return;
       }
 
-      // ✅ 更新全局变量
-      window.preciousListData = formatPreciousListData(data.data);
-      reRenderPreciousList(data.data);
+      // ✅ 格式化并保存
+      const formatted = formatPreciousListData(data.data);
+      window.preciousListData = formatted;
+
+      // ✅ 用格式化后的数据重新渲染
+      reRenderPreciousList(formatted);
     });
 }
 
-function renderPreciousList(data) {
-  // ✅ 用格式化后的数据更新全局数据
-  window.preciousListData = formatPreciousListData(data);
-
+function renderPreciousList() {
   const container = document.getElementById("table-gridjs");
 
   if (window.preciousGrid) {
