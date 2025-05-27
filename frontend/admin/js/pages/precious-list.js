@@ -256,7 +256,6 @@ function addEventListenerAfterDOMLoaded() {
           .value.trim(),
       };
 
-      console.log("status：", preciousData.status);
       const statusMapping = {
         Sold: 0,
         Active: 1,
@@ -278,12 +277,6 @@ function addEventListenerAfterDOMLoaded() {
         url: preciousData.url,
         picurl: preciousData.picurl,
       };
-
-      console.log(
-        "dataToSend status：",
-        statusMapping[preciousData.status],
-        dataToSend.status
-      );
 
       AddPreciousList(dataToSend);
     });
@@ -354,6 +347,13 @@ function addEventListenerAfterDOMLoaded() {
         url: editPreciousData.url,
         picurl: editPreciousData.picurl,
       };
+
+      console.log("status：", editPreciousData.status);
+      console.log(
+        "dataToSend status：",
+        statusMapping[editPreciousData.status],
+        dataToSend.status
+      );
 
       UpdatePreciousList(dataToSend);
     });
