@@ -113,7 +113,7 @@ function fetchAndRenderPreciousList() {
 
       // ✅ 格式化并保存
       const formatted = formatPreciousListData(data.data);
-      window.preciousListData = formatted;
+      preciousListData = formatted;
 
       // ✅ 用格式化后的数据重新渲染
       reRenderPreciousList(formatted);
@@ -123,12 +123,12 @@ function fetchAndRenderPreciousList() {
 function renderPreciousList(data) {
   const container = document.getElementById("table-gridjs");
 
-  if (window.preciousGrid) {
+  if (preciousGrid) {
     container.innerHTML = "";
-    window.preciousGrid = null;
+    preciousGrid = null;
   }
 
-  window.preciousGrid = new gridjs.Grid({
+  preciousGrid = new gridjs.Grid({
     columns: [
       { name: "ID", width: "50px" },
       { name: "ItemID", width: "200px" },
@@ -203,7 +203,7 @@ function renderPreciousList(data) {
     data: data, // ✅ 关键点：使用传入的 data，而不是 window.preciousListData
   });
 
-  window.preciousGrid.on("ready", () => {
+  preciousGrid.on("ready", () => {
     const tooltipTriggerList = [].slice.call(
       document.querySelectorAll('[data-bs-toggle="tooltip"]')
     );
@@ -212,7 +212,7 @@ function renderPreciousList(data) {
     });
   });
 
-  window.preciousGrid.render(container);
+  preciousGrid.render(container);
 }
 
 function reRenderPreciousList(data) {
@@ -225,7 +225,7 @@ function reRenderPreciousList(data) {
     renderPreciousList(data); // 原来的渲染逻辑
     container.classList.remove("fade-out");
     container.classList.add("fade-in");
-  }, 1000); // 和 CSS transition 时间一致
+  }, 300); // 和 CSS transition 时间一致
 }
 
 function addEventListenerAfterDOMLoaded() {
@@ -347,6 +347,7 @@ function addEventListenerAfterDOMLoaded() {
                 timer: 1000,
                 showConfirmButton: false,
               });
+              console.log("✅ 删除成功：", data);
 
               fetchAndRenderPreciousList(); // 重新渲染
             } else {
