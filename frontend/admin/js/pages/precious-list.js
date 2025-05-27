@@ -101,7 +101,7 @@ function getEditPreciousForm() {
 function fetchAndRenderPreciousList() {
   return fetch("https://www.infjew.com/api/preciouslist", {
     method: "GET",
-    credentials: "include", // 确保带上 cookie
+    credentials: "include",
   })
     .then((res) => res.json())
     .then((data) => {
@@ -121,17 +121,16 @@ function fetchAndRenderPreciousList() {
         item.status,
         item.url,
         item.picurl,
-        item.id, // 用于 Action 按钮（传 ID）
+        item.id,
       ]);
+
+      // 清空容器（重要：防止重复 render）
+      const container = document.getElementById("table-gridjs");
+      container.innerHTML = "";
 
       const grid = new gridjs.Grid({
         columns: [
-          {
-            name: "ID",
-            width: "50px",
-            formatter: (e) =>
-              gridjs.html('<span class="fw-semibold">' + e + "</span>"),
-          },
+          { name: "ID", width: "50px" },
           { name: "ItemID", width: "200px" },
           { name: "Title", width: "250px" },
           { name: "Tag", width: "120px" },
@@ -159,11 +158,11 @@ function fetchAndRenderPreciousList() {
             width: "50px",
             formatter: (e) =>
               gridjs.html(
-                e !== ""
-                  ? '<a class="link-reset fs-20 p-1 text-infjew" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="' +
-                      e +
-                      '"><i class="ti ti-link"></i></a>'
-                  : '<a class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
+                `<a class="link-reset fs-20 p-1 text-infjew"
+                    data-bs-toggle="tooltip" 
+                    data-bs-trigger="hover" 
+                    data-bs-title="${e}">
+                    <i class="ti ti-link"></i></a>`
               ),
           },
           {
@@ -171,11 +170,11 @@ function fetchAndRenderPreciousList() {
             width: "50px",
             formatter: (e) =>
               gridjs.html(
-                e !== ""
-                  ? '<a class="link-reset fs-20 p-1 text-info" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="' +
-                      e +
-                      '"><i class="ti ti-link"></i></a>'
-                  : '<a class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
+                `<a class="link-reset fs-20 p-1 text-info"
+                    data-bs-toggle="tooltip" 
+                    data-bs-trigger="hover" 
+                    data-bs-title="${e}">
+                    <i class="ti ti-link"></i></a>`
               ),
           },
           {
@@ -183,14 +182,18 @@ function fetchAndRenderPreciousList() {
             width: "100px",
             formatter: (e) =>
               gridjs.html(
-                '<div class="hstack gap-2">' +
-                  '<a data-bs-toggle="modal" data-bs-target="#EditPreciousModal" data-id="' +
-                  e +
-                  '" class="btn btn-soft-success btn-icon btn-sm rounded-circle table-edit-precious-btn">' +
-                  '<i class="ti ti-edit fs-16"></i></a>' +
-                  '<a href="javascript:void(0);" class="btn btn-soft-danger btn-icon btn-sm rounded-circle sweet-delete-btn" data-id="' +
-                  e +
-                  '"><i class="ti ti-trash"></i></a></div>'
+                `<div class="hstack gap-2">
+                  <a data-bs-toggle="modal" data-bs-target="#EditPreciousModal" 
+                     data-id="${e}" 
+                     class="btn btn-soft-success btn-icon btn-sm rounded-circle table-edit-precious-btn">
+                    <i class="ti ti-edit fs-16"></i>
+                  </a>
+                  <a href="javascript:void(0);" 
+                     class="btn btn-soft-danger btn-icon btn-sm rounded-circle sweet-delete-btn" 
+                     data-id="${e}">
+                    <i class="ti ti-trash"></i>
+                  </a>
+                </div>`
               ),
           },
         ],
@@ -200,18 +203,25 @@ function fetchAndRenderPreciousList() {
         data: preciousListData,
       });
 
-      // 渲染 grid
-      grid.render(document.getElementById("table-gridjs"));
+      // 用 GridJS 的 on('ready') 确保 DOM 渲染完，再初始化 Tooltips
+      grid.on("ready", () => {
+        // 销毁已有的 Tooltip（防止重复初始化）
+        const existingTooltips = bootstrap.Tooltip.getInstance(
+          document.querySelector('[data-bs-toggle="tooltip"]')
+        );
+        if (existingTooltips) existingTooltips.dispose?.();
 
-      // 延迟激活 Bootstrap Tooltip，确保 DOM 渲染完成
-      setTimeout(() => {
+        // 初始化所有 Tooltip
         const tooltipTriggerList = [].slice.call(
           document.querySelectorAll('[data-bs-toggle="tooltip"]')
         );
         tooltipTriggerList.forEach(function (el) {
           new bootstrap.Tooltip(el);
         });
-      }, 100); // 100ms 延迟通常足够，也可以调成 300ms 测试
+      });
+
+      // 最终渲染表格
+      grid.render(container);
     });
 }
 
