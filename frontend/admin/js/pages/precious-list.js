@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 function fillEditForm(result) {
   // 确保 result 有足够的字段
-  if (!result || result.length < 8) return;
+  if (!result || result.length < 10) return;
 
   // 填写对应字段
   document.getElementById("edit-precious-id").value = result[0];
@@ -50,15 +50,13 @@ function fillEditForm(result) {
 
   document.getElementById("edit-precious-url").value = result[8];
 
-  // 模拟图片地址为 PreciousId（你可以换成实际字段）
-  document.getElementById(
-    "edit-precious-picture-url"
-  ).value = `https://yourcdn.com/images/${result[1]}.jpg`;
+  document.getElementById("edit-precious-picture-url").value = result[9];
 }
 
 function clearPreciousForm() {
   // 文本输入框清空
   document.getElementById("edit-precious-id").value = "";
+  document.getElementById("edit-precious-itemid").value = "";
   document.getElementById("edit-precious-title").value = "";
   document.getElementById("edit-precious-price").value = "";
   document.getElementById("edit-precious-discount").value = "";
@@ -82,6 +80,7 @@ function clearPreciousForm() {
 function getEditPreciousForm() {
   const editPreciousData = {
     id: document.getElementById("edit-precious-id").value.trim(),
+    itemid: document.getElementById("edit-precious-itemid").value.trim(),
     title: document.getElementById("edit-precious-title").value.trim(),
     price: document.getElementById("edit-precious-price").value.trim(),
     status:
@@ -92,10 +91,8 @@ function getEditPreciousForm() {
       parseFloat(document.getElementById("edit-precious-discount").value) || 0,
     tag: document.getElementById("edit-precious-tag").value,
     rating: parseInt(document.getElementById("edit-rating-select").value),
-    Url: document.getElementById("edit-precious-url").value.trim(),
-    pictureUrl: document
-      .getElementById("edit-precious-picture-url")
-      .value.trim(),
+    url: document.getElementById("edit-precious-url").value.trim(),
+    picurl: document.getElementById("edit-precious-picture-url").value.trim(),
   };
 
   console.log("提交的数据：", editPreciousData);
