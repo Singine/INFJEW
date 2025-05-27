@@ -2,17 +2,17 @@ window.addEventListener("DOMContentLoaded", function () {
   GetBanner();
   GetCountingDown();
   GetPreciousList();
+});
 
-  document.addEventListener("click", function (event) {
-    // 检查点击的元素是否包含 jump-to-new 类
-    if (event.target && event.target.classList.contains("jump-to-new")) {
-      // 检查元素是否包含 sold-out-active 类
-      if (!event.target.classList.contains("sold-out-active")) {
-        // 获取 data-jump 属性的值，并打开对应的 URL
-        window.open(event.target.getAttribute("data-jump"));
-      }
+document.addEventListener("click", function (event) {
+  // 检查点击的元素是否包含 jump-to-new 类
+  if (event.target && event.target.classList.contains("jump-to-new")) {
+    // 检查元素是否包含 sold-out-active 类
+    if (!event.target.classList.contains("sold-out-active")) {
+      // 获取 data-jump 属性的值，并打开对应的 URL
+      window.open(event.target.getAttribute("data-jump"));
     }
-  });
+  }
 });
 
 function GetBanner() {
