@@ -257,6 +257,7 @@ function createProductCard(product) {
     "align-items-center"
   );
 
+  // 如果是售罄，添加售罄标签
   if (isSoldOut) {
     const soldOut = document.createElement("div");
     soldOut.classList.add("sold-out-inner");
