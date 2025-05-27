@@ -349,7 +349,8 @@ function addEventListenerAfterDOMLoaded() {
               });
               console.log("✅ 删除成功：", data);
 
-              fetchAndRenderPreciousList(); // 重新渲染
+              // ✅ 用格式化后的数据重新渲染
+              reRenderPreciousList(formatPreciousListData(data.data));
             } else {
               Swal.fire({
                 title: "❌ 删除失败",
