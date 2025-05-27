@@ -1,4 +1,4 @@
-const preciousListData = [];
+window.preciousListData = [];
 
 window.addEventListener("DOMContentLoaded", function () {
   fetchAndRenderPreciousList().then(() => {
