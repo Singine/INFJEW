@@ -90,6 +90,8 @@ document.getElementById("table-gridjs").addEventListener("click", function (e) {
       row.includes(editBtn.getAttribute("data-id"))
     );
 
+    console.log("编辑按钮点击，找到的行数据：", result);
+
     fillEditForm(result);
   }
 });
