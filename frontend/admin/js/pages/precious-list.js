@@ -267,9 +267,8 @@ function addEventListenerAfterDOMLoaded() {
       const editBtn = e.target.closest(".table-edit-precious-btn");
 
       if (editBtn) {
-        const result = preciousListData.find((row) =>
-          row.includes(editBtn.getAttribute("data-id"))
-        );
+        const id = parseInt(editBtn.getAttribute("data-id"), 10);
+        const result = preciousListData.find((row) => row[0] === id);
 
         console.log("编辑按钮点击，找到的行数据：", result, preciousListData);
 
