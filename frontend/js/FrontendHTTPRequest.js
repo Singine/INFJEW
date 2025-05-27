@@ -56,11 +56,74 @@ function GetBanner() {
         loop: true,
         autoplay: true,
         autoplayTimeout: 5000,
-        nav: true,
-        dots: true,
+        nav: false,
+        dots: false,
+        responsiveClass: true,
       });
     })
     .catch((err) => {
       console.error("请求 banner 出错:", err);
+    });
+}
+
+function GetCountingDown() {
+  fetch("https://www.infjew.com/api/public/countingdown")
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.success || !data.data || data.data.length === 0) {
+        console.error("无倒计时数据可展示");
+        return;
+      }
+
+      const item = data.data[0]; // 取第一个商品
+
+      const container = document.getElementById("countingdownContainer");
+      if (!container) return;
+
+      // 更新标题和折扣信息
+      container.querySelector(
+        "h4"
+      ).innerHTML = `Precious Sale <span>${item.percentage} Off</span>`;
+      container.querySelector("h2").textContent = item.title;
+
+      // 更新评分
+      const ratingEl = container.querySelector(".item-rating");
+      ratingEl.innerHTML = "";
+      for (let i = 0; i < 5; i++) {
+        const star = document.createElement("i");
+        star.className = "las la-star" + (i < item.rating ? "" : " inactive");
+        ratingEl.appendChild(star);
+      }
+
+      // 更新价格
+      const priceEl = container.querySelector(".item-price p");
+      priceEl.innerHTML = `$${item.discount} <span>$${item.price}</span>`;
+
+      // 更新按钮链接
+      const goBtn = document.getElementById("go-for-it-btn");
+      if (goBtn) {
+        goBtn.href = item.url;
+      }
+
+      // 更新图片
+      const imgEl = document.querySelector(".countdown-img img");
+      if (imgEl) {
+        imgEl.src = item.picurl;
+      }
+
+      // 初始化倒计时
+      const ddl = new Date(item.ddl);
+      simplyCountdown(".simply-countdown-one", {
+        year: ddl.getFullYear(),
+        month: ddl.getMonth() + 1,
+        day: ddl.getDate(),
+        hours: ddl.getHours(),
+        minutes: ddl.getMinutes(),
+        seconds: ddl.getSeconds(),
+        enableUtc: false,
+      });
+    })
+    .catch((err) => {
+      console.error("获取倒计时数据失败:", err);
     });
 }

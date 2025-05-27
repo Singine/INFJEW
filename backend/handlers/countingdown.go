@@ -34,6 +34,8 @@ type UpdateCountingDownData struct {
     PicURL     string `json:"picurl"`
 }
 
+
+
 // 获取所有 CountingDown 数据
 func GetCountingDownHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
@@ -123,5 +125,45 @@ func UpdateCountingDownHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"success": true,
 		"message": "更新成功",
+	})
+}
+
+
+func PublicGetCountingDownHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "Method Not Allowed",
+		})
+		return
+	}
+
+	rows, err := db.DB.Query(`SELECT id, title, price, discount, percentage, rating, ddl, url, picurl FROM countingdown`)
+	if err != nil {
+		log.Printf("❌ 查询 countingdown 数据失败: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "数据库查询失败",
+		})
+		return
+	}
+	defer rows.Close()
+
+	var items []CountingDown
+	for rows.Next() {
+		var item CountingDown
+		if err := rows.Scan(&item.ID, &item.Title, &item.Price, &item.Discount, &item.Percentage, &item.Rating, &item.DDL, &item.URL, &item.PicURL); err != nil {
+			log.Printf("❌ 数据行扫描失败: %v", err)
+			continue
+		}
+		items = append(items, item)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"success": true,
+		"data":    items,
 	})
 }

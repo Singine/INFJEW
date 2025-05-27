@@ -55,6 +55,7 @@ func main() {
 	// 以下是前端用api
 
 	mux.Handle("/api/public/banners", ApplyMiddlewares(http.HandlerFunc(handlers.PublicGetBannersHandler), middleware.WithCORS))
+	mux.Handle("/api/public/countingdown", ApplyMiddlewares(http.HandlerFunc(handlers.PublicGetCountingDownHandler), middleware.WithCORS))
 
 
 	fmt.Println("服务器启动中，监听端口 8080...")
