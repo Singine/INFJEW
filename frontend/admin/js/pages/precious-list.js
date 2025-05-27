@@ -315,15 +315,15 @@ function addEventListenerAfterDOMLoaded() {
     const id = parseInt(deleteBtn.dataset.id);
 
     Swal.fire({
-      title: "你确定吗？",
-      text: "此操作将永久删除该条数据！",
+      title: "Are you sure?",
+      text: "The data will be deleted！",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "确认删除",
-      cancelButtonText: "取消",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
       customClass: {
-        confirmButton: "swal2-confirm btn btn-danger",
-        cancelButton: "btn btn-secondary ms-2",
+        confirmButton: "swal2-confirm btn btn-,infjew",
+        cancelButton: "btn btn-primary ms-2",
       },
       buttonsStyling: false,
     }).then((result) => {
