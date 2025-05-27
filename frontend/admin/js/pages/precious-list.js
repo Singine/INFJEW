@@ -202,6 +202,14 @@ function fetchAndRenderPreciousList() {
         search: true,
         data: preciousListData,
       }).render(document.getElementById("table-gridjs"));
+
+      // 激活 tooltip
+      const tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      tooltipTriggerList.forEach(function (el) {
+        new bootstrap.Tooltip(el);
+      });
     });
 }
 
