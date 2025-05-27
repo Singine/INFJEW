@@ -270,8 +270,22 @@ function createProductCard(product) {
   image.src = product.picurl;
   image.alt = product.title;
   imageWrapper.appendChild(image);
-  inner.appendChild(imageWrapper);
 
+  // 如果 status 为 2，添加折扣标签
+  if (product.status === 2 && product.discount < product.price) {
+    const discountPercentage = Math.floor(
+      ((product.price - product.discount) / product.price) * 100
+    );
+    const discountTag = document.createElement("span");
+    discountTag.classList.add("new");
+    discountTag.innerHTML = `-${discountPercentage}%`;
+    const flags = document.createElement("span");
+    flags.classList.add("flags");
+    flags.appendChild(discountTag);
+    imageWrapper.appendChild(flags);
+  }
+
+  inner.appendChild(imageWrapper);
   card.appendChild(inner);
 
   const content = document.createElement("div");
