@@ -120,7 +120,8 @@ function fetchAndRenderPreciousList() {
 }
 
 function renderPreciousList(data) {
-  document.getElementById("table-gridjs").innerHTML = "";
+  const container = document.getElementById("table-gridjs");
+  container.innerHTML = ""; // 清空容器内容
 
   const preciousGrid = new gridjs.Grid({
     columns: [
