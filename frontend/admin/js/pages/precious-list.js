@@ -203,15 +203,15 @@ function fetchAndRenderPreciousList() {
       // 渲染 grid
       grid.render(document.getElementById("table-gridjs"));
 
-      // 确保 tooltip 初始化在 DOM 渲染完成之后
-      grid.on("ready", () => {
+      // 延迟激活 Bootstrap Tooltip，确保 DOM 渲染完成
+      setTimeout(() => {
         const tooltipTriggerList = [].slice.call(
           document.querySelectorAll('[data-bs-toggle="tooltip"]')
         );
         tooltipTriggerList.forEach(function (el) {
           new bootstrap.Tooltip(el);
         });
-      });
+      }, 100); // 100ms 延迟通常足够，也可以调成 300ms 测试
     });
 }
 
