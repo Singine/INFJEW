@@ -152,7 +152,7 @@ function GetPreciousList() {
 }
 
 function renderProducts(products) {
-  // 获取到展示区域
+  // 获取展示区域
   const allProductsContainer = document.querySelector("#all-products .row");
   const stellunaProductsContainer =
     document.querySelector("#top-stelluna .row");
@@ -169,15 +169,15 @@ function renderProducts(products) {
   products.forEach((product) => {
     const productCard = createProductCard(product);
 
-    // 根据标签(tag)决定插入位置
+    // 插入到 All 分类中
+    allProductsContainer.appendChild(productCard);
+
+    // 根据 tag 插入到对应的分类中
     if (product.tag === "Stelluna") {
       stellunaProductsContainer.appendChild(productCard);
     } else if (product.tag === "Adornment") {
       adornmentProductsContainer.appendChild(productCard);
     }
-
-    // 不管标签如何，都插入到所有产品列表中
-    allProductsContainer.appendChild(productCard);
   });
 }
 
