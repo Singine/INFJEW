@@ -1,5 +1,3 @@
-window.preciousListData = [];
-
 fetch("https://www.infjew.com/api/preciouslist", {
   method: "GET",
   credentials: "include", // 确保带上 cookie
@@ -11,7 +9,7 @@ fetch("https://www.infjew.com/api/preciouslist", {
       return;
     }
 
-    preciousListData = data.data.map((item) => [
+    const preciousListData = data.data.map((item) => [
       item.id,
       item.title,
       item.tag,

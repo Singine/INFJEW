@@ -1,106 +1,10 @@
-Array.from(document.getElementsByClassName("form-check-input-add")).forEach(
-  function (radio) {
-    radio.addEventListener("click", function () {
-      if (document.getElementById("add-statusRadio2").checked) {
-        document
-          .getElementById("add-precious-discount")
-          .removeAttribute("disabled");
-      } else {
-        document
-          .getElementById("add-precious-discount")
-          .setAttribute("disabled", "disabled");
-      }
-    });
-  }
-);
-Array.from(document.getElementsByClassName("form-check-input-edit")).forEach(
-  function (radio) {
-    radio.addEventListener("click", function () {
-      if (document.getElementById("edit-statusRadio2").checked) {
-        document
-          .getElementById("edit-precious-discount")
-          .removeAttribute("disabled");
-      } else {
-        document
-          .getElementById("edit-precious-discount")
-          .setAttribute("disabled", "disabled");
-      }
-    });
-  }
-);
+const preciousListData = [];
 
-document
-  .getElementById("add-precious-btn")
-  .addEventListener("click", function () {
-    const addPreciousData = {
-      id: document.getElementById("add-precious-id").value.trim(),
-      title: document.getElementById("add-precious-title").value.trim(),
-      price: document.getElementById("add-precious-price").value.trim(),
-      status:
-        document
-          .querySelector('input[name="add-statusRadio"]:checked')
-          ?.nextElementSibling.innerText.trim() || "",
-      discount:
-        parseFloat(document.getElementById("add-precious-discount").value) || 0,
-      tag: document.getElementById("add-precious-tag").value,
-      rating: parseInt(document.getElementById("add-rating-select").value),
-      Url: document.getElementById("add-precious-url").value.trim(),
-      pictureUrl: document
-        .getElementById("add-precious-picture-url")
-        .value.trim(),
-    };
-
-    console.log("提交的数据：", addPreciousData);
-
-    // // 请求 API
-    // fetch("/api/precious", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(dataPrecious),
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok.");
-    //     }
-    //     return response.json(); // 如果后端返回 JSON
-    //   })
-    //   .then((result) => {
-    //     console.log("服务器响应：", result);
-    //     alert("添加成功！");
-    //   })
-    //   .catch((error) => {
-    //     console.error("发送请求出错:", error);
-    //     alert("提交失败，请检查网络或数据格式。");
-    //   });
+window.addEventListener("DOMContentLoaded", function () {
+  fetchAndRenderPreciousList().then(() => {
+    addEventListenerAfterDOMLoaded();
   });
-
-document
-  .getElementById("close-save-precious-btn")
-  .addEventListener("click", function () {
-    clearPreciousForm();
-  });
-
-document.getElementById("table-gridjs").addEventListener("click", function (e) {
-  const editBtn = e.target.closest(".table-edit-precious-btn");
-
-  if (editBtn) {
-    const result = preciousListData.find((row) =>
-      row.includes(editBtn.getAttribute("data-id"))
-    );
-
-    console.log("编辑按钮点击，找到的行数据：", result);
-
-    fillEditForm(result);
-  }
 });
-
-document
-  .getElementById("save-precious-btn")
-  .addEventListener("click", function () {
-    getEditPreciousForm();
-  });
 
 function fillEditForm(result) {
   // 确保 result 有足够的字段
@@ -203,4 +107,179 @@ function getEditPreciousForm() {
   };
 
   console.log("提交的数据：", editPreciousData);
+}
+
+function fetchAndRenderPreciousList() {
+  fetch("https://www.infjew.com/api/preciouslist", {
+    method: "GET",
+    credentials: "include", // 确保带上 cookie
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.success) {
+        console.error("❌ 获取失败：", data.message);
+        return;
+      }
+
+      preciousListData = data.data.map((item) => [
+        item.id,
+        item.title,
+        item.tag,
+        item.price,
+        item.discount,
+        item.rating,
+        item.status,
+        item.url,
+        item.id, // 用于 Action 按钮（传 ID）
+      ]);
+
+      new gridjs.Grid({
+        columns: [
+          {
+            name: "ID",
+            width: "200px",
+            formatter: (e) =>
+              gridjs.html('<span class="fw-semibold">' + e + "</span>"),
+          },
+          { name: "Title", width: "250px" },
+          { name: "Tag", width: "120px" },
+          { name: "Price", width: "50px" },
+          { name: "Discount", width: "50px" },
+          { name: "Rating", width: "50px" },
+          {
+            name: "Status",
+            width: "100px",
+            formatter: (e) =>
+              gridjs.html(
+                e === 1
+                  ? '<span class="badge bg-success fs-12 p-1">Active</span>'
+                  : e === 0
+                  ? '<span class="badge bg-primary fs-12 p-1">Sold</span>'
+                  : e === 2
+                  ? '<span class="badge bg-warning fs-12 p-1">Sale</span>'
+                  : e === 3
+                  ? '<span class="badge bg-danger fs-12 p-1">Unavailable</span>'
+                  : '<span class="badge bg-secondary-subtle text-secondary fs-12 p-1">Unknown</span>'
+              ),
+          },
+          {
+            name: "Url",
+            width: "50px",
+            formatter: (e) =>
+              gridjs.html(
+                e !== ""
+                  ? '<a href="' +
+                      e +
+                      '" class="link-reset fs-20 p-1 text-infjew" target="_blank"><i class="ti ti-link"></i></a>'
+                  : '<a href="javascript:void(0);" class="link-reset fs-20 p-1 text-light"><i class="ti ti-link"></i></a>'
+              ),
+          },
+          {
+            name: "Action",
+            width: "100px",
+            formatter: (e) =>
+              gridjs.html(
+                '<div class="hstack gap-2">' +
+                  '<a data-bs-toggle="modal" data-bs-target="#EditPreciousModal" data-id="' +
+                  e +
+                  '" class="btn btn-soft-success btn-icon btn-sm rounded-circle table-edit-precious-btn">' +
+                  '<i class="ti ti-edit fs-16"></i></a>' +
+                  '<a href="javascript:void(0);" class="btn btn-soft-danger btn-icon btn-sm rounded-circle sweet-delete-btn" data-id="' +
+                  e +
+                  '"><i class="ti ti-trash"></i></a></div>'
+              ),
+          },
+        ],
+        pagination: { limit: 10 },
+        sort: true,
+        search: true,
+        data: preciousListData,
+      }).render(document.getElementById("table-gridjs"));
+    });
+}
+
+function addEventListenerAfterDOMLoaded() {
+  Array.from(document.getElementsByClassName("form-check-input-add")).forEach(
+    function (radio) {
+      radio.addEventListener("click", function () {
+        if (document.getElementById("add-statusRadio2").checked) {
+          document
+            .getElementById("add-precious-discount")
+            .removeAttribute("disabled");
+        } else {
+          document
+            .getElementById("add-precious-discount")
+            .setAttribute("disabled", "disabled");
+        }
+      });
+    }
+  );
+  Array.from(document.getElementsByClassName("form-check-input-edit")).forEach(
+    function (radio) {
+      radio.addEventListener("click", function () {
+        if (document.getElementById("edit-statusRadio2").checked) {
+          document
+            .getElementById("edit-precious-discount")
+            .removeAttribute("disabled");
+        } else {
+          document
+            .getElementById("edit-precious-discount")
+            .setAttribute("disabled", "disabled");
+        }
+      });
+    }
+  );
+
+  document
+    .getElementById("add-precious-btn")
+    .addEventListener("click", function () {
+      const addPreciousData = {
+        id: document.getElementById("add-precious-id").value.trim(),
+        title: document.getElementById("add-precious-title").value.trim(),
+        price: document.getElementById("add-precious-price").value.trim(),
+        status:
+          document
+            .querySelector('input[name="add-statusRadio"]:checked')
+            ?.nextElementSibling.innerText.trim() || "",
+        discount:
+          parseFloat(document.getElementById("add-precious-discount").value) ||
+          0,
+        tag: document.getElementById("add-precious-tag").value,
+        rating: parseInt(document.getElementById("add-rating-select").value),
+        Url: document.getElementById("add-precious-url").value.trim(),
+        pictureUrl: document
+          .getElementById("add-precious-picture-url")
+          .value.trim(),
+      };
+
+      console.log("提交的数据：", addPreciousData);
+    });
+
+  document
+    .getElementById("close-save-precious-btn")
+    .addEventListener("click", function () {
+      clearPreciousForm();
+    });
+
+  document
+    .getElementById("table-gridjs")
+    .addEventListener("click", function (e) {
+      const editBtn = e.target.closest(".table-edit-precious-btn");
+
+      if (editBtn) {
+        const result = preciousListData.find((row) =>
+          row.includes(editBtn.getAttribute("data-id"))
+        );
+
+        console.log("编辑按钮点击，找到的行数据：", result, preciousListData);
+
+        fillEditForm(result);
+      }
+    });
+
+  document
+    .getElementById("save-precious-btn")
+    .addEventListener("click", function () {
+      getEditPreciousForm();
+    });
 }
