@@ -27,17 +27,17 @@
   });
 
   // Countdown
-  var countDown = function () {
-    simplyCountdown(".simply-countdown-one", {
-      year: "2025",
-      month: "8",
-      day: "8",
-    });
-  };
+  // var countDown = function () {
+  //   simplyCountdown(".simply-countdown-one", {
+  //     year: "2025",
+  //     month: "8",
+  //     day: "8",
+  //   });
+  // };
 
-  $(function () {
-    countDown();
-  });
+  // $(function () {
+  //   countDown();
+  // });
 
   // Offcanvas menu
   $(".menu-trigger").on("click", function () {

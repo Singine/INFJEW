@@ -1,6 +1,7 @@
 window.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded");
   GetBanner();
+  GetCountingDown();
 });
 
 function GetBanner() {
@@ -113,14 +114,20 @@ function GetCountingDown() {
 
       // 初始化倒计时
       const ddl = new Date(item.ddl);
+      //   simplyCountdown(".simply-countdown-one", {
+      //     year: ddl.getFullYear(),
+      //     month: ddl.getMonth() + 1,
+      //     day: ddl.getDate(),
+      //     hours: ddl.getHours(),
+      //     minutes: ddl.getMinutes(),
+      //     seconds: ddl.getSeconds(),
+      //     enableUtc: false,
+      //   });
+
       simplyCountdown(".simply-countdown-one", {
         year: ddl.getFullYear(),
         month: ddl.getMonth() + 1,
         day: ddl.getDate(),
-        hours: ddl.getHours(),
-        minutes: ddl.getMinutes(),
-        seconds: ddl.getSeconds(),
-        enableUtc: false,
       });
     })
     .catch((err) => {
