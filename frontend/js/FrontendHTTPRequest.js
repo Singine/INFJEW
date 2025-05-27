@@ -243,6 +243,12 @@ function createProductCard(product) {
   card.classList.add("top-product-wrapper", "jump-to-new");
   card.dataset.jump = product.url;
 
+  // 判断是否为 "Sold out" 状态
+  const isSoldOut = product.status === 0;
+  if (isSoldOut) {
+    card.classList.add("sold-out-active");
+  }
+
   const inner = document.createElement("div");
   inner.classList.add(
     "top-product-inner",
@@ -251,7 +257,7 @@ function createProductCard(product) {
     "align-items-center"
   );
 
-  if (product.status === 0) {
+  if (isSoldOut) {
     const soldOut = document.createElement("div");
     soldOut.classList.add("sold-out-inner");
     soldOut.innerHTML = "<span>Sold out</span>";
