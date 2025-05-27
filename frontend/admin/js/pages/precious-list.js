@@ -113,7 +113,7 @@ function fetchAndRenderPreciousList() {
       }
 
       preciousListData = data.data.map((item) => [
-        item.id,
+        item.itemid,
         item.title,
         item.tag,
         item.price,
