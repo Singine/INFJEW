@@ -152,33 +152,87 @@ function GetPreciousList() {
 }
 
 function renderProducts(products) {
-  // 获取展示区域
   const allProductsContainer = document.querySelector("#all-products .row");
-  const stellunaProductsContainer =
-    document.querySelector("#top-stelluna .row");
-  const adornmentProductsContainer = document.querySelector(
-    "#top-adornment .row"
-  );
+  const tabContainer = document.querySelector("#newArrivalTabContainer");
+  const tabContent = document.querySelector("#nav-tabContent");
 
   // 清空现有内容
   allProductsContainer.innerHTML = "";
-  stellunaProductsContainer.innerHTML = "";
-  adornmentProductsContainer.innerHTML = "";
+  tabContainer.innerHTML = "";
+  tabContent.innerHTML = "";
 
-  // 遍历产品数据，渲染到不同的区域
+  // 动态分类：根据 tag 分类产品
+  const categorizedProducts = categorizeProductsByTag(products);
+
+  // 创建 All 分类
+  const allTabButton = document.createElement("button");
+  allTabButton.classList.add("nav-link", "active");
+  allTabButton.id = "all-products-tab";
+  allTabButton.setAttribute("data-bs-toggle", "tab");
+  allTabButton.setAttribute("data-bs-target", "#all-products");
+  allTabButton.setAttribute("type", "button");
+  allTabButton.setAttribute("role", "tab");
+  allTabButton.setAttribute("aria-controls", "all-products");
+  allTabButton.setAttribute("aria-selected", "true");
+  allTabButton.innerText = "All";
+  tabContainer.appendChild(allTabButton);
+
+  const allTabPane = document.createElement("div");
+  allTabPane.classList.add("tab-pane", "fade", "show", "active");
+  allTabPane.id = "all-products";
+  allTabPane.setAttribute("role", "tabpanel");
+  allTabPane.setAttribute("aria-labelledby", "all-products-tab");
+  const allRow = document.createElement("div");
+  allRow.classList.add("row");
   products.forEach((product) => {
     const productCard = createProductCard(product);
-
-    // 插入到 All 分类中
-    allProductsContainer.appendChild(productCard);
-
-    // 根据 tag 插入到对应的分类中
-    if (product.tag === "Stelluna") {
-      stellunaProductsContainer.appendChild(productCard);
-    } else if (product.tag === "Adornment") {
-      adornmentProductsContainer.appendChild(productCard);
-    }
+    allRow.appendChild(productCard);
   });
+  allTabPane.appendChild(allRow);
+  tabContent.appendChild(allTabPane);
+
+  // 创建其他分类 Tabs
+  for (const [tag, productsInCategory] of Object.entries(categorizedProducts)) {
+    const tabButton = document.createElement("button");
+    tabButton.classList.add("nav-link");
+    tabButton.id = `${tag}-tab`;
+    tabButton.setAttribute("data-bs-toggle", "tab");
+    tabButton.setAttribute("data-bs-target", `#${tag}`);
+    tabButton.setAttribute("type", "button");
+    tabButton.setAttribute("role", "tab");
+    tabButton.setAttribute("aria-controls", tag);
+    tabButton.setAttribute("aria-selected", "false");
+    tabButton.innerText = tag.charAt(0).toUpperCase() + tag.slice(1);
+    tabContainer.appendChild(tabButton);
+
+    const tabPane = document.createElement("div");
+    tabPane.classList.add("tab-pane", "fade");
+    tabPane.id = tag;
+    tabPane.setAttribute("role", "tabpanel");
+    tabPane.setAttribute("aria-labelledby", `${tag}-tab`);
+    const row = document.createElement("div");
+    row.classList.add("row");
+    productsInCategory.forEach((product) => {
+      const productCard = createProductCard(product);
+      row.appendChild(productCard);
+    });
+    tabPane.appendChild(row);
+    tabContent.appendChild(tabPane);
+  }
+}
+
+// 根据 tag 分类产品
+function categorizeProductsByTag(products) {
+  const categorized = {};
+
+  products.forEach((product) => {
+    if (!categorized[product.tag]) {
+      categorized[product.tag] = [];
+    }
+    categorized[product.tag].push(product);
+  });
+
+  return categorized;
 }
 
 function createProductCard(product) {
@@ -197,7 +251,6 @@ function createProductCard(product) {
     "align-items-center"
   );
 
-  // 如果产品已售罄，显示"Sold out"
   if (product.status === 0) {
     const soldOut = document.createElement("div");
     soldOut.classList.add("sold-out-inner");
