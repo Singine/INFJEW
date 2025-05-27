@@ -333,19 +333,20 @@ function addEventListenerAfterDOMLoaded() {
       };
 
       const dataToSend = {
-        id: preciousData.id, // 保留原有的 id，用于更新操作
-        itemid: preciousData.itemid,
-        title: preciousData.title,
-        price: parseInt(preciousData.price), // 将 price 转换为整数
-        status: statusMapping[preciousData.status] || 3, // 如果 status 不匹配则默认为 'Unavailable' (3)
+        id: editPreciousData.id, // 保留原有的 id，用于更新操作
+        itemid: editPreciousData.itemid,
+        title: editPreciousData.title,
+        price: parseInt(editPreciousData.price), // 将 price 转换为整数
+        status: statusMapping[editPreciousData.status] || 3, // 如果 status 不匹配则默认为 'Unavailable' (3)
         discount:
-          preciousData.discount == 0 && statusMapping[preciousData.status] != 2
-            ? parseInt(preciousData.price) // 如果 discount 为 0 且 status 不是 'Sale'，则将 discount 设置为 price
-            : preciousData.discount, // 否则使用原本的 discount
-        tag: preciousData.tag,
-        rating: preciousData.rating,
-        url: preciousData.url,
-        picurl: preciousData.picurl,
+          editPreciousData.discount == 0 &&
+          statusMapping[editPreciousData.status] != 2
+            ? parseInt(editPreciousData.price) // 如果 discount 为 0 且 status 不是 'Sale'，则将 discount 设置为 price
+            : editPreciousData.discount, // 否则使用原本的 discount
+        tag: editPreciousData.tag,
+        rating: editPreciousData.rating,
+        url: editPreciousData.url,
+        picurl: editPreciousData.picurl,
       };
 
       UpdatePreciousList(dataToSend);
