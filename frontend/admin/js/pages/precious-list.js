@@ -77,27 +77,6 @@ function clearPreciousForm() {
   document.getElementById("edit-rating-select").selectedIndex = 0;
 }
 
-function getEditPreciousForm() {
-  const editPreciousData = {
-    id: document.getElementById("edit-precious-id").value.trim(),
-    itemid: document.getElementById("edit-precious-itemid").value.trim(),
-    title: document.getElementById("edit-precious-title").value.trim(),
-    price: document.getElementById("edit-precious-price").value.trim(),
-    status:
-      document
-        .querySelector('input[name="edit-statusRadio"]:checked')
-        ?.nextElementSibling.innerText.trim() || "",
-    discount:
-      parseFloat(document.getElementById("edit-precious-discount").value) || 0,
-    tag: document.getElementById("edit-precious-tag").value,
-    rating: parseInt(document.getElementById("edit-rating-select").value),
-    url: document.getElementById("edit-precious-url").value.trim(),
-    picurl: document.getElementById("edit-precious-picture-url").value.trim(),
-  };
-
-  console.log("提交的数据：", editPreciousData);
-}
-
 function fetchAndRenderPreciousList() {
   return fetch("https://www.infjew.com/api/preciouslist", {
     method: "GET",
@@ -326,7 +305,50 @@ function addEventListenerAfterDOMLoaded() {
   document
     .getElementById("save-precious-btn")
     .addEventListener("click", function () {
-      getEditPreciousForm();
+      const editPreciousData = {
+        id: document.getElementById("edit-precious-id").value.trim(),
+        itemid: document.getElementById("edit-precious-itemid").value.trim(),
+        title: document.getElementById("edit-precious-title").value.trim(),
+        price: document.getElementById("edit-precious-price").value.trim(),
+        status:
+          document
+            .querySelector('input[name="edit-statusRadio"]:checked')
+            ?.nextElementSibling.innerText.trim() || "",
+        discount:
+          parseFloat(document.getElementById("edit-precious-discount").value) ||
+          0,
+        tag: document.getElementById("edit-precious-tag").value,
+        rating: parseInt(document.getElementById("edit-rating-select").value),
+        url: document.getElementById("edit-precious-url").value.trim(),
+        picurl: document
+          .getElementById("edit-precious-picture-url")
+          .value.trim(),
+      };
+
+      const statusMapping = {
+        Sold: 0,
+        Active: 1,
+        Sale: 2,
+        Unavailable: 3,
+      };
+
+      const dataToSend = {
+        id: preciousData.id, // 保留原有的 id，用于更新操作
+        itemid: preciousData.itemid,
+        title: preciousData.title,
+        price: parseInt(preciousData.price), // 将 price 转换为整数
+        status: statusMapping[preciousData.status] || 3, // 如果 status 不匹配则默认为 'Unavailable' (3)
+        discount:
+          preciousData.discount == 0 && statusMapping[preciousData.status] != 2
+            ? parseInt(preciousData.price) // 如果 discount 为 0 且 status 不是 'Sale'，则将 discount 设置为 price
+            : preciousData.discount, // 否则使用原本的 discount
+        tag: preciousData.tag,
+        rating: preciousData.rating,
+        url: preciousData.url,
+        picurl: preciousData.picurl,
+      };
+
+      UpdatePreciousList(dataToSend);
     });
 
   document.addEventListener("click", function (e) {
@@ -358,14 +380,6 @@ function addEventListenerAfterDOMLoaded() {
           .then((res) => res.json())
           .then((data) => {
             if (data.success) {
-              Swal.fire({
-                title: "Deleted!",
-                icon: "info",
-                timer: 1000,
-                showConfirmButton: false,
-              });
-              console.log("✅ 删除成功：", data);
-
               location.reload(); // 重新加载页面以更新数据
             } else {
               Swal.fire({
@@ -420,6 +434,28 @@ function AddPreciousList(e) {
         location.reload(); // 重新加载页面以更新数据
       } else {
         console.error("新增失败", result.message);
+      }
+    })
+    .catch((error) => {
+      console.error("请求失败", error);
+    });
+}
+
+function UpdatePreciousList(e) {
+  fetch(`https://www.infjew.com/api/preciouslist/update`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(e),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success) {
+        console.log("更新成功", result);
+        location.reload(); // 重新加载页面以更新数据
+      } else {
+        console.error("更新失败", result.message);
       }
     })
     .catch((error) => {
